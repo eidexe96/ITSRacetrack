@@ -1,0 +1,48 @@
+from time import *
+import _thread
+
+def startProgramm():
+    identified = False
+    while identified == False:                                   #Loop solange kein Auto identifiziert ist
+        #Read QR Code
+        #get Variables
+        #such as teamid & identified
+        if identified == True:                                   #Initialisiere Startsequenz sobald ein Auto erkannt wurde
+            showResults(0, teamid)                               #zeigt bisherige Ergebnisse des Teams an
+            playSpeech(0, teamid)                                #erzählt infos zum Team
+            _thread.start_new_thread( playSound, (0) )           #spielt Startsounds ab und zeitgleich:
+            _thread.start_new_thread( startLightExpress, (0) )   #startet Ampelsequenz zum Start des Rennens
+    
+    starttime = clock()                                          #startet die Zeitmessung unabhängig davon, ob das Auto zu spät los fährt
+    activeCheckpoint = 1
+    abort=False
+    
+    while identified == True:                                                   #Loop für Rennen, Messung etc.
+        if checkpointReached(activeCheckpoint % 4):
+            saveTime(starttime, activeCheckpoint % 4)                           #speichert die LiveZeit vom gerade durchlaufnenen Checkpoint [0,1,2,3]
+            _thread.start_new_thread(startLightExpress,(activeCheckpoint))      #Ampel leuchtet, bekommt den gerade durchlaufenen Checkpoint, läuft parallel
+            _thread.start_new_thread(playSound,(activeCheckpoint))              #Spielt parallel den Sound, erhält Checkpoint Nr [1,2,...8] der gerade durchlaufen wird
+            _thread.start_new_thread(playSpeech,(activeCheckpoint, teamid))     #spricht (parallel), erhält Checkpoint Nr [1,2,...8] der gerade durchlaufen wird und ggf. TeamID
+            showResults(activeCheckpoint, teamid)                               #Zeigt Ergebnisse, erhält TeamID für DB & activeCheckpoint um die Live Zeit auszulesen
+            activeCheckpoint += 1
+        if activeCheckpoint == 9:                                               #beendet das Rennen, speichert und zeigt Ergebnisse
+            prepareDataForDB(teamID)                                            #rechnet einzelne Zeiten aus und schreibt diese in die DB
+            showResults(9, teamid)
+            break
+        
+        if buttonPressed():                                                     #Button zum manuellen Abbrechen/Resetten des Rennens
+            if abort:
+                stopLightExpress()                                              #Bestätigt visuell Eingabe des Resett-Befehls
+                break
+            else
+                abort = True
+                time.sleep(3)
+                
+        if abort and not buttonPressed():                                       #Resettet den Button wenn dieser zu früh losgelassen wurde
+            abort = False
+            
+
+while True:                                                                     #Starts Programm on Buttonpress
+    if buttonPressed():
+        startProgramm()
+        break
