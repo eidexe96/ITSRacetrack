@@ -66,41 +66,41 @@ def roundSum2(all):
         
 def checkpointReached(checkNr):
     if (checkNr == 0):
-        return checkGPIO0()
+        return GPIO.input(0)
     elif (checkNr == 1):
-        return checkGPIO1()
+        return GPIO.input(1)
     elif (checkNr == 2):
-        return checkGPIO2()
+        return GPIO.input(2)
     elif (checkNr == 3):
-        return checkGPIO3()
+        return GPIO.input(3)
 
 
     
 def prepareDataForDB(teamid):
     time101 = cp1.time1
     time201 = cp1.time2 - cp0.time1
-    if (time101<=time201):
+    if (time101<=time201):            #beste Zeit für Abschnitt 1 bestimmt
         time01 = time101
     else
         time01 = time201
     
     time112 = cp2.time1 - cp1.time1
     time212 = cp2.time2 - cp1.time2
-    if (time112<=time212):
+    if (time112<=time212):            #beste Zeit für Abschnitt 2 bestimmt
         time12 time112
     else
         time12 time212
     
     time123 = cp3.time1 - cp2.time1
     time212 = cp3.time2 - cp2.time2
-    if (time123<=time223):
+    if (time123<=time223):            #beste Zeit für Abschnitt 3 bestimmt
         time23 time123
     else
         time23 time223
         
     time130 = cp0.time1 - cp3.time1
     time230 = cp0.time2 - cp3.time2
-    if (time130<=time230):
+    if (time130<=time230):            #beste Zeit für Abschnitt 4 bestimmt
         time30 time130
     else
         time30 time230        
@@ -108,11 +108,11 @@ def prepareDataForDB(teamid):
     round1 = roundSum1(checkpt.allCpts)
     round2 = roundSum2(checkpt.allCpts)
     if (round1 <= round2):
-        bestround = round1
+        bestround = round1            #beste Rundenzeit bestimmt
     else
         bestround = round2
     
     totalTime = round1 + round2
     
-    writetoDB(teamid, totalTime, bestround, time01, time12, time23, time30, 0)
+    writetoDB(teamid, totalTime, bestround, time01, time12, time23, time30, 0) #0 Platzhalter, falls noch benötigt
     
