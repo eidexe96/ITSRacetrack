@@ -20,10 +20,13 @@ class checkpt:
         checkpt.allCpts.append(self)
         
         
-    def assignPins(self)
-        GPIO.setup(self.outputPin, GPIO.OUT)
-        GPIO.output(self.outputPin, 1)
-        GPIO.input(self.inputPin)
+    def assignPins(self):
+        i = self.inputPin
+        o = self.outputPin
+        GPIO.setup(o, GPIO.OUT)
+        GPIO.output(o, 1)
+        GPIO.setup(i, GPIO.IN)
+        GPIO.input(i)
     
     def resetCpt(self):
         self.time1 = 0
@@ -33,16 +36,26 @@ class checkpt:
     
 
     
-    def saveTime(self, starttime):
+    def savePartTime(self, starttime):
         if (self.starttime != 0):
             if (self.check1 == False):
-                self.time1 = time.clock() - self.starttime
+                self.time1 = time.clock() - starttime
                 self.check1 = True
             elif (self.check2 == False):
-                self.time2 = time.clock() - self.starttime
+                self.time2 = time.clock() - starttime
                 self.check2 = True
 
 
+def saveTime(starttime, checkNr):
+    if (checkNr == 0):
+        cp0.savePartTime
+    elif (checkNr == 1):
+        cp1.savePartTime
+    elif (checkNr == 2):
+        cp2.savePartTime
+    elif (checkNr == 3):
+        cp3.savePartTime
+                
 
 def resetAll(all):
     for item in all:
@@ -53,14 +66,12 @@ def roundSum1(all):
     round1 = 0
     for item in all:
         round1 += item.time1
-        
     return round1
 
 def roundSum2(all):
     round2 = 0
     for item in all:
         round2 += item.time2
-        
     return round2
 
 
