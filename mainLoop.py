@@ -23,15 +23,15 @@ def startProgramm():
     abort=False
     
     while identified == True:                                                   #Loop für Rennen, Messung etc.
-        if cpl.checkpointReached(activeCheckpoint % 4):
-            cpl.saveTime(starttime, activeCheckpoint % 4)                       #speichert die LiveZeit vom aktuellen Checkpoint [0,1,2,3]
+        if checkpointReached(activeCheckpoint % 4):
+            saveTime(starttime, activeCheckpoint % 4)                       #speichert die LiveZeit vom aktuellen Checkpoint [0,1,2,3]
             _thread.start_new_thread(lit.startLightExpress,(activeCheckpoint))  #Ampel leuchtet, checkpointabhängig, läuft parallel
             _thread.start_new_thread(sound.playSound,(activeCheckpoint))        #Spielt parallel den Sound, checkpointabhängig [1...8]
             _thread.start_new_thread(sound.playSpeech,(activeCheckpoint, teamid)) #spricht (parallel),checkpointabhängig [1...8],teamid?
             rslt.showResults(activeCheckpoint, teamid)                               #Zeigt Ergebnisse
             activeCheckpoint += 1
         if activeCheckpoint == 9:                                               #beendet das Rennen, speichert und zeigt Ergebnisse
-            cpl.prepareDataForDB(teamID)                                        #rechnet einzelne Zeiten aus und schreibt diese in die DB
+            prepareDataForDB(teamID)                                        #rechnet einzelne Zeiten aus und schreibt diese in die DB
             rslt.showResults(9, teamid)
             break
         
