@@ -1,4 +1,4 @@
-from neopixel import *
+﻿from neopixel import *
 import checkpointLogic as cpl                
 
 LED_COUNT      = 20      # Number of LED pixels.
@@ -254,19 +254,19 @@ def playStartSequence():
         strip.show()
         return True               
                                     
-    else
+    else:
         secondLight()
         #playSound(-1)
         check = cpl.checkpointReached(0)
         if check == 1:
             print("Fehlstart")
             flashRed()
-            playSound('')
+            #playSound('')
             allOff()
             strip.show()
             return True
             
-        else
+        else:
             thirdLight()
             #playSound(-1)
             check = cpl.checkpointReached(0)
@@ -278,7 +278,7 @@ def playStartSequence():
                 strip.show()
                 return True
             
-            else
+            else:
                 finalLight()
                 startSignal = 1
                 #playSound(0)

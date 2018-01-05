@@ -7,7 +7,7 @@ def showResults(activeCheckpoint, teamid, starttime):
     htmlpage = "test.html" #Zieldatei html
     if activeCheckpoint == 0:
         #show Team info
-        df = pd.DataFrame.from_csv(fn)
+        df = pd.read_csv(fn)     #pd.DataFrame.from_csv(fn)
         table = pd.DataFrame.to_html(df)
         htmlOut= open(htmlpage,"w")
         html = '<html><head><title>Racing Info</title><meta http-equiv="refresh" content="5"></head><body><p>Racing Infos here</p><a href="http://localhost:8081/0">Anderer Text</a>' 

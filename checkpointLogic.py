@@ -1,5 +1,5 @@
 import time
-import writetoDB
+import writeToDb
 import RPi.GPIO as GPIO
 GPIO.setmode(GPIO.BCM)
 

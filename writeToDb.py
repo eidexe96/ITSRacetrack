@@ -9,12 +9,12 @@ def writeToDb(teamid, gesamtzeit, rundenzeit, zeit01, zeit12, zeit23, zeit30, li
         info = "Erschaffen in den Flammen Mordors; gekommen um Cybertron zu retten"
     elif (teamid == 2):
         teamname = "X"
-        teammitglieder = "Gökhan; Alex; Julia"
+        teammitglieder = "Goekhan; Alex; Julia"
         info="empty"
     elif(teamid == 3):
-        teamname = "Team 2",
-        teammitglieder = "Jörn; Darius; Miro"
-        info="Das ist doch egal! Das ist eh nur vorläufig..."
+        teamname = "Team 2"
+        teammitglieder = "Joern; Darius; Miro"
+        info="Das ist doch egal! Das ist eh nur vorlaeufig..."
     elif(teamid == 4):
         teamname = "Pink Danger"
         teammitglieder = "Rafia; Tobias; Luisa; Michael"
