@@ -62,7 +62,7 @@ def playSound(check):
     elif check == 8:
         sound = "end_good.wav"
     
-    call(["aplay", "/home/pi/work/sound/"+sound])
+    call(["aplay", "/home/pi/its/ITSRacetrack/sounds/"+sound])
         
     
     
