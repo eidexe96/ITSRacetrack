@@ -1,10 +1,11 @@
 from subprocess import call
 from random import randint
+global text
 #speech synthesis functions
 
 def playSpeech(check, teamID):
-    global text
-    if check == 1 or check == 2 or check == 3 or check == 5 or check == 6 or check == 7 or check == 0:
+    
+    if check == 1 or check == 2 or check == 3 or check == 5 or check == 6 or check == 7:
         z = randint(1,10)
         if z == 1:
             text = "Beispiel 1"
@@ -55,7 +56,7 @@ def playSound(check):
     elif check == 0:
         sound = "beep_2.wav"
     elif check == 1 or check == 2 or check == 3 or check == 5 or check == 6 or check == 7:
-        sound = "check.wav"
+        sound = "checkpoint.wav"
     elif check == 4:
         sound = "2nd_lap.wav"
     elif check == 8:
