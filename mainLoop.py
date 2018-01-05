@@ -4,22 +4,26 @@ import checkpointLogic as cpl
 import sound
 import light as lit
 import showResults as rslt
-import buttonPressed as btn
+#import buttonPressed as btn
 import runServer
-import readQRCode as qr
+#import readQRCode as qr
 _thread.start_new_thread(runServer.startServer, ())
 
-global abort
-abort = False
+global identified
 
 def startProgramm():
     identified = False
     while identified == False:                                   #Loop solange kein Auto identifiziert ist
-        teamid, identified = qr.readQRCode()                     #Wenn der Scan funktioniert hat, wird die teamid und ein True-Flag zurückgegeben
+        teamid=1
+        #teamid, identified = qr.readQRCode()                     #Wenn der Scan funktioniert hat, wird die teamid und ein True-Flag zurückgegeben
+        identified = True
         if identified == True:                                   #Initialisiere Startsequenz sobald ein Auto erkannt wurde
             rslt.showResults(0, teamid, 0)                       #zeigt bisherige Ergebnisse des Teams an
             sound.playSpeech(0, teamid)                          #erzählt infos zum Team
-            lit.playStartSequence()                              #startet Ampel, Sounds und Fehlstartkontrolle
+            fehlstart = lit.playStartSequence()                  #startet Ampel, Sounds und Fehlstartkontrolle
+            if fehlstart:
+                print("Fehlstart")
+                break
     
     starttime = clock()                                          #startet die Zeitmessung unabhängig davon, ob das Auto zu spät los fährt
     activeCheckpoint = 1
@@ -35,23 +39,14 @@ def startProgramm():
         if activeCheckpoint == 9:                                               #beendet das Rennen, speichert und zeigt Ergebnisse
             cpl.prepareDataForDB(teamID)                                        #rechnet einzelne Zeiten aus und schreibt diese in die DB
             rslt.showResults(9, teamid)
+            lit.raceEnd()
+            print("Rennen beendet")
             break
         
-        if btn.buttonPressed():                                                     #Button zum manuellen Abbrechen/Resetten des Rennens
-            if abort:
-                lit.stopLightExpress()                                              #Bestätigt visuell Eingabe des Resett-Befehls
-                break
-            else:
-                abort = True
-                time.sleep(3)
-                
-        if abort and not btn.buttonPressed():                                   #Resettet den Button wenn dieser zu früh losgelassen wurde
-            abort = False
-            
-
-while True:                                                                     #Starts Programm on Buttonpress
-    if btn.buttonPressed():
-        startProgramm()
-        break
-        
-        
+try:
+    print("Starting Programm")
+    startProgramm()
+except KeyboardInterrupt:
+    print("Programm aborted")
+    pass
+break
