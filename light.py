@@ -242,21 +242,21 @@ def flashGreen():
     
     
 def playStartSequence():
-    playSound(-2)
+    #playSound(-2)
     firstLight()
-    playSound(-1)
+    #playSound(-1)
     check = cpl.checkpointReached(0)
     if check == 1:                  
         print("Fehlstart")
         flashRed()
-        playSound('')               #Hier fehlt noch Variable für Loser Sound
+        #playSound('')               #Hier fehlt noch Variable für Loser Sound
         allOff()
         strip.show()
         return True               
                                     
     else
         secondLight()
-        playSound(-1)
+        #playSound(-1)
         check = cpl.checkpointReached(0)
         if check == 1:
             print("Fehlstart")
@@ -268,12 +268,12 @@ def playStartSequence():
             
         else
             thirdLight()
-            playSound(-1)
+            #playSound(-1)
             check = cpl.checkpointReached(0)
             if check == 1:
                 print("Fehlstart")
                 flashRed()
-                playSound('')
+                #playSound('')
                 allOff()
                 strip.show()
                 return True
@@ -281,7 +281,7 @@ def playStartSequence():
             else
                 finalLight()
                 startSignal = 1
-                playSound(0)
+                #playSound(0)
 
     
 def stopLightExpress():
