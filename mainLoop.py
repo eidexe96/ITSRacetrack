@@ -25,11 +25,11 @@ def startProgramm():
                 print("Fehlstart")
                 break
     
-    starttime = clock()                                          #startet die Zeitmessung unabhängig davon, ob das Auto zu spät los fährt
+    starttime = time.clock()                                          #startet die Zeitmessung unabhängig davon, ob das Auto zu spät los fährt
     activeCheckpoint = 1
     
     while identified == True:                                                   #Loop für Rennen, Messung etc.
-        if checkpointReached(activeCheckpoint % 4):
+        if cpl.checkpointReached(activeCheckpoint % 4):
             cpl.saveTime(starttime, activeCheckpoint % 4)                       #speichert die LiveZeit vom aktuellen Checkpoint [0,1,2,3]
             _thread.start_new_thread(lit.startLightExpress,(activeCheckpoint))  #Ampel leuchtet, checkpointabhängig, läuft parallel
             _thread.start_new_thread(sound.playSound,(activeCheckpoint))        #Spielt parallel den Sound, checkpointabhängig [1...8]
@@ -49,4 +49,3 @@ try:
 except KeyboardInterrupt:
     print("Programm aborted")
     pass
-break
