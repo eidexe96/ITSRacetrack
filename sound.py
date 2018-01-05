@@ -1,7 +1,14 @@
 from subprocess import call
 from random import randint
+import math
+global min
+global sec
 global text
 #speech synthesis functions
+
+def time_convert(t):
+    min = math.floor(t/60)
+    sec = t%60
 
 def playSpeech(check, teamID):
     
