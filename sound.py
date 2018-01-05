@@ -1,6 +1,6 @@
 from subprocess import call
 from random import randint
-
+global text
 #speech synthesis functions
 
 def playSpeech(check, teamID):
