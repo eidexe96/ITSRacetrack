@@ -1,7 +1,14 @@
 from subprocess import call
 from random import randint
+import math
+global min
+global sec
 global text
 #speech synthesis functions
+
+def time_convert(t):
+    min = math.floor(t/60)
+    sec = t%60
 
 def playSpeech(check, teamID):
     
@@ -55,11 +62,11 @@ def playSound(check):
         sound = "beep_1.wav"
     elif check == 0:
         sound = "beep_2.wav"
-    elif check == 1 or check == 2 or check == 3 or check == 5 or check == 6 or check == 7:
-        sound = "check.wav"
-    elif check == 4:
+    elif check == 2 or check == 3 or check == 4 or check == 6 or check == 7 or check == 8:
+        sound = "checkpoint.wav"
+    elif check == 5:
         sound = "2nd_lap.wav"
-    elif check == 8:
+    elif check == 9:
         sound = "end_good.wav"
     
     call(["aplay", "/home/pi/its/ITSRacetrack/sounds/"+sound])

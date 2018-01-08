@@ -1,4 +1,4 @@
-﻿from neopixel import *
+from neopixel import *
 import checkpointLogic as cpl                
 
 LED_COUNT      = 20      # Number of LED pixels.
@@ -309,15 +309,28 @@ def stopLightExpress():
 
 
 def startLightExpress():
-    if cpl.checkpointReached(1) == 1:
-        flashGreen()
-        
     if cpl.checkpointReached(2) == 1:
         flashGreen()
-    
+        
     if cpl.checkpointReached(3) == 1:
         flashGreen()
+        
+    if cpl.checkpointReached(4) == 1:
+        flashGreen()
+        
+    if cpl.checkpointReached(5) == 1:
+        flashGreen()
+        
+    if cpl.checkpointReached(6) == 1:
+        flashGreen()
+        
+    if cpl.checkpointReached(7) == 1:
+        flashGreen()
+       
+    if cpl.checkpointReached(8) == 1:
+        flashGreen()
         allBlue()
+        
         
 def raceEnd():
     allOff()
