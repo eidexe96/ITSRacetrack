@@ -45,10 +45,10 @@ class checkpt:
                 self.time2 = time.clock() - starttime
                 self.check2 = True
 
-cp0 = checkpt(0, 4, 21)
-cp1 = checkpt(1, 22, 16)
-cp2 = checkpt(2, 17, 25)
-cp3 = checkpt(3, 5, 24)
+cp0 = checkpt(0, 4, 17)
+cp1 = checkpt(1, 5, 6)
+cp2 = checkpt(2, 23, 24)
+cp3 = checkpt(3, 16, 20)
 
 cp0.assignPins()
 cp1.assignPins()
