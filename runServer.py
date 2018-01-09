@@ -1,7 +1,7 @@
 import time
 from http.server import BaseHTTPRequestHandler, HTTPServer
 
-HOST_NAME = 'localhost'
+HOST_NAME = '192.168.0.193'
 PORT_NUMBER = 8081
 
 class MyHandler(BaseHTTPRequestHandler):
@@ -32,7 +32,7 @@ class MyHandler(BaseHTTPRequestHandler):
 if __name__ == '__main__':
     server_class = HTTPServer
     httpd = server_class((HOST_NAME, PORT_NUMBER), MyHandler)
-    print(time.asctime(), 'Server Starts - %s:%s' % (HOST_NAME, PORT_NUMBER))
+    #print(time.asctime(), 'Server Starts - %s:%s' % (HOST_NAME, PORT_NUMBER))
 
     try:
         httpd.serve_forever()
@@ -41,4 +41,4 @@ if __name__ == '__main__':
     except KeyboardInterrupt:
         pass
     httpd.server_close()
-    print(time.asctime(), 'Server Stops - %s:%s' % (HOST_NAME, PORT_NUMBER))
+    #print(time.asctime(), 'Server Stops - %s:%s' % (HOST_NAME, PORT_NUMBER))
