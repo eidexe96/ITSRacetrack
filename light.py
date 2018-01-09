@@ -264,6 +264,7 @@ def flashBlue():
     
 def playStartSequence():
     #playSound(-2)
+    print("startSequence")
     firstLight()
     #playSound(-1)
     check = cpl.checkpointReached(0)
@@ -360,6 +361,9 @@ def startLightExpress():
 def raceEnd():
     allOff()
     strip.show()
+    
+allYellow()
+
         
         
         
