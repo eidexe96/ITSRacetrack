@@ -1,7 +1,9 @@
 from neopixel import *
-import checkpointLogic as cpl                
+import time
+import checkpointLogic as cpl
+#import sound
 
-LED_COUNT      = 20      # Number of LED pixels.
+LED_COUNT      = 24      # Number of LED pixels.
 LED_PIN        = 18      # GPIO pin connected to the pixels (18 uses PWM!).
 #LED_PIN        = 10      # GPIO pin connected to the pixels (10 uses SPI /dev/spidev0.0).
 LED_FREQ_HZ    = 800000  # LED signal frequency in hertz (usually 800khz)
@@ -16,13 +18,26 @@ strip = Adafruit_NeoPixel(LED_COUNT, LED_PIN, LED_FREQ_HZ, LED_DMA, LED_INVERT)
 # Intialize the library (must be called once before other functions).
 strip.begin()
 
-
+#strip.setPixelColorRGB(0, Rot, Blau, Grün)
     
 def allOff():
-    strip.setPixelColorRGB(0, 0, 0, 0)
-    strip.setPixelColorRGB(1, 0, 0, 0)
-    strip.setPixelColorRGB(2, 0, 0, 0)
-    strip.setPixelColorRGB(3, 0, 0, 0)
+    for x in range(24):
+        strip.setPixelColorRGB(x, 0, 0, 0)
+    
+    
+def allGreen():
+    for x in range(24):
+        strip.setPixelColorRGB(x, 0, 0, 255)
+    
+def allYellow():
+    for x in range(24):
+        strip.setPixelColorRGB(x, 255, 0, 255)
+
+def firstLight():
+    strip.setPixelColorRGB(0, 255, 0, 0)
+    strip.setPixelColorRGB(1, 255, 0, 0)
+    strip.setPixelColorRGB(2, 255, 0, 0)
+    strip.setPixelColorRGB(3, 255, 0, 0)
     strip.setPixelColorRGB(4, 0, 0, 0)
     strip.setPixelColorRGB(5, 0, 0, 0)
     strip.setPixelColorRGB(6, 0, 0, 0)
@@ -33,148 +48,18 @@ def allOff():
     strip.setPixelColorRGB(11, 0, 0, 0)
     strip.setPixelColorRGB(12, 0, 0, 0)
     strip.setPixelColorRGB(13, 0, 0, 0)
-    strip.setPixelColorRGB(14, 0, 0, 0)
-    strip.setPixelColorRGB(15, 0, 0, 0)
-    strip.setPixelColorRGB(16, 0, 0, 0)
-    strip.setPixelColorRGB(17, 0, 0, 0)
+    strip.setPixelColorRGB(14, 255, 0, 0)
+    strip.setPixelColorRGB(15, 255, 0, 0)
+    strip.setPixelColorRGB(16, 255, 0, 0)
+    strip.setPixelColorRGB(17, 255, 0, 0)
     strip.setPixelColorRGB(18, 0, 0, 0)
     strip.setPixelColorRGB(19, 0, 0, 0)
-    strip.setPixelColorRGB(20, 0, 0, 0)
-    strip.setPixelColorRGB(21, 0, 0, 0)
+    strip.setPixelColorRGB(20, 255, 0, 0)
+    strip.setPixelColorRGB(21, 255, 0, 0)
     strip.setPixelColorRGB(22, 0, 0, 0)
     strip.setPixelColorRGB(23, 0, 0, 0)
     
-def allBlue():
-    strip.setPixelColorRGB(0, 0, 0, 255)
-    strip.setPixelColorRGB(1, 0, 0, 255)
-    strip.setPixelColorRGB(2, 0, 0, 255)
-    strip.setPixelColorRGB(3, 0, 0, 255)
-    strip.setPixelColorRGB(4, 0, 0, 255)
-    strip.setPixelColorRGB(5, 0, 0, 255)
-    strip.setPixelColorRGB(6, 0, 0, 255)
-    strip.setPixelColorRGB(7, 0, 0, 255)
-    strip.setPixelColorRGB(8, 0, 0, 255)
-    strip.setPixelColorRGB(9, 0, 0, 255)
-    strip.setPixelColorRGB(10, 0, 0, 255)
-    strip.setPixelColorRGB(11, 0, 0, 255)
-    strip.setPixelColorRGB(12, 0, 0, 255)
-    strip.setPixelColorRGB(13, 0, 0, 255)
-    strip.setPixelColorRGB(14, 0, 0, 255)
-    strip.setPixelColorRGB(15, 0, 0, 255)
-    strip.setPixelColorRGB(16, 0, 0, 255)
-    strip.setPixelColorRGB(17, 0, 0, 255)
-    strip.setPixelColorRGB(18, 0, 0, 255)
-    strip.setPixelColorRGB(19, 0, 0, 255)
-    strip.setPixelColorRGB(20, 0, 0, 255)
-    strip.setPixelColorRGB(21, 0, 0, 255)
-    strip.setPixelColorRGB(22, 0, 0, 255)
-    strip.setPixelColorRGB(23, 0, 0, 255)
-    
-def allYellow():
-    strip.setPixelColorRGB(0, 255, 255, 0)
-    strip.setPixelColorRGB(1, 255, 255, 0)
-    strip.setPixelColorRGB(2, 255, 255, 0)
-    strip.setPixelColorRGB(3, 255, 255, 0)
-    strip.setPixelColorRGB(4, 255, 255, 0)
-    strip.setPixelColorRGB(5, 255, 255, 0)
-    strip.setPixelColorRGB(6, 255, 255, 0)
-    strip.setPixelColorRGB(7, 255, 255, 0)
-    strip.setPixelColorRGB(8, 255, 255, 0)
-    strip.setPixelColorRGB(9, 255, 255, 0)
-    strip.setPixelColorRGB(10, 255, 255, 0)
-    strip.setPixelColorRGB(11, 255, 255, 0)
-    strip.setPixelColorRGB(12, 255, 255, 0)
-    strip.setPixelColorRGB(13, 255, 255, 0)
-    strip.setPixelColorRGB(14, 255, 255, 0)
-    strip.setPixelColorRGB(15, 255, 255, 0)
-    strip.setPixelColorRGB(16, 255, 255, 0)
-    strip.setPixelColorRGB(17, 255, 255, 0)
-    strip.setPixelColorRGB(18, 255, 255, 0)
-    strip.setPixelColorRGB(19, 255, 255, 0)
-    strip.setPixelColorRGB(20, 255, 255, 0)
-    strip.setPixelColorRGB(21, 255, 255, 0)
-    strip.setPixelColorRGB(22, 255, 255, 0)
-    strip.setPixelColorRGB(23, 255, 255, 0)
-    
-def firstLight():
-    strip.setPixelColorRGB(0, 0, 255, 0)
-    strip.setPixelColorRGB(1, 0, 255, 0)
-    strip.setPixelColorRGB(2, 0, 255, 0)
-    strip.setPixelColorRGB(3, 0, 255, 0)
-    strip.setPixelColorRGB(4, 0, 0, 0)
-    strip.setPixelColorRGB(5, 0, 0, 0)
-    strip.setPixelColorRGB(6, 0, 0, 0)
-    strip.setPixelColorRGB(7, 0, 0, 0)
-    strip.setPixelColorRGB(8, 0, 0, 0)
-    strip.setPixelColorRGB(9, 0, 0, 0)
-    strip.setPixelColorRGB(10, 0, 0, 0)
-    strip.setPixelColorRGB(11, 0, 0, 0)
-    strip.setPixelColorRGB(12, 0, 0, 0)
-    strip.setPixelColorRGB(13, 0, 0, 0)
-    strip.setPixelColorRGB(14, 0, 0, 0)
-    strip.setPixelColorRGB(15, 0, 0, 0)
-    strip.setPixelColorRGB(16, 0, 0, 0)
-    strip.setPixelColorRGB(17, 0, 255, 0)
-    strip.setPixelColorRGB(18, 0, 255, 0)
-    strip.setPixelColorRGB(19, 0, 255, 0)
-    strip.setPixelColorRGB(20, 0, 255, 0)
-    strip.setPixelColorRGB(21, 0, 0, 0)
-    strip.setPixelColorRGB(22, 0, 0, 0)
-    strip.setPixelColorRGB(23, 0, 255, 0)
-    
 def secondLight():
-    strip.setPixelColorRGB(0, 0, 255, 0)
-    strip.setPixelColorRGB(1, 0, 255, 0)
-    strip.setPixelColorRGB(2, 0, 255, 0)
-    strip.setPixelColorRGB(3, 0, 255, 0)
-    strip.setPixelColorRGB(4, 0, 255, 0)
-    strip.setPixelColorRGB(5, 0, 255, 0)
-    strip.setPixelColorRGB(6, 0, 255, 0)
-    strip.setPixelColorRGB(7, 0, 255, 0)
-    strip.setPixelColorRGB(8, 0, 0, 0)
-    strip.setPixelColorRGB(9, 0, 0, 0)
-    strip.setPixelColorRGB(10, 0, 0, 0)
-    strip.setPixelColorRGB(11, 0, 0, 0)
-    strip.setPixelColorRGB(12, 0, 0, 0)
-    strip.setPixelColorRGB(13, 0, 255, 0)
-    strip.setPixelColorRGB(14, 0, 255, 0)
-    strip.setPixelColorRGB(15, 0, 255, 0)
-    strip.setPixelColorRGB(16, 0, 255, 0)
-    strip.setPixelColorRGB(17, 0, 255, 0)
-    strip.setPixelColorRGB(18, 0, 255, 0)
-    strip.setPixelColorRGB(19, 0, 255, 0)
-    strip.setPixelColorRGB(20, 0, 255, 0)
-    strip.setPixelColorRGB(21, 0, 0, 0)
-    strip.setPixelColorRGB(22, 0, 255, 0)
-    strip.setPixelColorRGB(23, 0, 255, 0)
-    
-def thirdLight():
-    strip.setPixelColorRGB(0, 0, 255, 0)
-    strip.setPixelColorRGB(1, 0, 255, 0)
-    strip.setPixelColorRGB(2, 0, 255, 0)
-    strip.setPixelColorRGB(3, 0, 255, 0)
-    strip.setPixelColorRGB(4, 0, 255, 0)
-    strip.setPixelColorRGB(5, 0, 255, 0)
-    strip.setPixelColorRGB(6, 0, 255, 0)
-    strip.setPixelColorRGB(7, 0, 255, 0)
-    strip.setPixelColorRGB(8, 0, 255, 0)
-    strip.setPixelColorRGB(9, 0, 255, 0)
-    strip.setPixelColorRGB(10, 0, 255, 0)
-    strip.setPixelColorRGB(11, 0, 255, 0)
-    strip.setPixelColorRGB(12, 0, 255, 0)
-    strip.setPixelColorRGB(13, 0, 255, 0)
-    strip.setPixelColorRGB(14, 0, 255, 0)
-    strip.setPixelColorRGB(15, 0, 255, 0)
-    strip.setPixelColorRGB(16, 0, 255, 0)
-    strip.setPixelColorRGB(17, 0, 255, 0)
-    strip.setPixelColorRGB(18, 0, 255, 0)
-    strip.setPixelColorRGB(19, 0, 255, 0)
-    strip.setPixelColorRGB(20, 0, 255, 0)
-    strip.setPixelColorRGB(21, 0, 255, 0)
-    strip.setPixelColorRGB(22, 0, 255, 0)
-    strip.setPixelColorRGB(23, 0, 255, 0)
-
-def finalLight():
     strip.setPixelColorRGB(0, 255, 0, 0)
     strip.setPixelColorRGB(1, 255, 0, 0)
     strip.setPixelColorRGB(2, 255, 0, 0)
@@ -182,10 +67,10 @@ def finalLight():
     strip.setPixelColorRGB(4, 255, 0, 0)
     strip.setPixelColorRGB(5, 255, 0, 0)
     strip.setPixelColorRGB(6, 255, 0, 0)
-    strip.setPixelColorRGB(7, 255, 0, 0)
-    strip.setPixelColorRGB(8, 255, 0, 0)
-    strip.setPixelColorRGB(9, 255, 0, 0)
-    strip.setPixelColorRGB(10, 255, 0, 0)
+    strip.setPixelColorRGB(7, 0, 0, 0)
+    strip.setPixelColorRGB(8, 0, 0, 0)
+    strip.setPixelColorRGB(9, 0, 0, 0)
+    strip.setPixelColorRGB(10, 0, 0, 0)
     strip.setPixelColorRGB(11, 255, 0, 0)
     strip.setPixelColorRGB(12, 255, 0, 0)
     strip.setPixelColorRGB(13, 255, 0, 0)
@@ -193,61 +78,89 @@ def finalLight():
     strip.setPixelColorRGB(15, 255, 0, 0)
     strip.setPixelColorRGB(16, 255, 0, 0)
     strip.setPixelColorRGB(17, 255, 0, 0)
-    strip.setPixelColorRGB(18, 255, 0, 0)
+    strip.setPixelColorRGB(18, 0, 0, 0)
     strip.setPixelColorRGB(19, 255, 0, 0)
     strip.setPixelColorRGB(20, 255, 0, 0)
     strip.setPixelColorRGB(21, 255, 0, 0)
     strip.setPixelColorRGB(22, 255, 0, 0)
-    strip.setPixelColorRGB(23, 255, 0, 0)
+    strip.setPixelColorRGB(23, 0, 0, 0)
+    
+def allRed():
+    for x in range(24):
+        strip.setPixelColorRGB(x, 255, 0, 0)
+    
+
+def allBlue():
+    for x in range(24):
+        strip.setPixelColorRGB(x, 0, 255, 0)
+    
     
 def flashRed():                                  #Lichtsignal bei Fehlstart
-    thirdLight()
+    allRed()
     strip.show()
     time.sleep(0.3)
     allOff()
     strip.show()
     time.sleep(0.1)
-    thirdLight()
+    allRed()
     strip.show()
     time.sleep(0.3)
     allOff()
     strip.show()
     time.sleep(0.1)
-    thirdLight()
+    allRed()
     strip.show()
     time.sleep(0.3)
     allOff()
     strip.show()
     
 def flashGreen():
-    finalLight()
+    allGreen()
     strip.show()
     time.sleep(0.3)
     allOff()
     strip.show()
     time.sleep(0.1)
-    finalLight()
+    allGreen()
     strip.show()
     time.sleep(0.3)
     allOff()
     strip.show()
     time.sleep(0.1)
-    finalLight()
+    allGreen()
     strip.show()
     time.sleep(0.3)
     allOff()
     strip.show()
     
-
-    
+def flashBlue():
+    allBlue()
+    strip.show()
+    time.sleep(0.3)
+    allOff()
+    strip.show()
+    time.sleep(0.1)
+    allBlue()
+    strip.show()
+    time.sleep(0.3)
+    allOff()
+    strip.show()
+    time.sleep(0.1)
+    allBlue()
+    strip.show()
+    time.sleep(0.3)
+    allOff()
+    strip.show()
     
 def playStartSequence():
     #playSound(-2)
-    print("startSequence")
+    print("firstLight")
     firstLight()
+    strip.show()
+    time.sleep(2)
     #playSound(-1)
-    check = cpl.checkpointReached(0)
-    if check == 1:                  
+    check = False #cpl.checkpointReached(0)
+    if check == True:                  
         print("Fehlstart")
         flashRed()
         #playSound('')               #Hier fehlt noch Variable für Loser Sound
@@ -256,10 +169,13 @@ def playStartSequence():
         return True               
                                     
     else:
+        print("SecondLight")
         secondLight()
+        strip.show()
+        time.sleep(2)
         #playSound(-1)
-        check = cpl.checkpointReached(0)
-        if check == 1:
+        check = False #cpl.checkpointReached(0)
+        if check == True:
             print("Fehlstart")
             flashRed()
             #playSound('')
@@ -268,10 +184,13 @@ def playStartSequence():
             return True
             
         else:
-            thirdLight()
+            print("allRed")
+            allRed()
+            strip.show()
+            time.sleep(2)
             #playSound(-1)
-            check = cpl.checkpointReached(0)
-            if check == 1:
+            check = False #cpl.checkpointReached(0)
+            if check == True:
                 print("Fehlstart")
                 flashRed()
                 #playSound('')
@@ -280,8 +199,11 @@ def playStartSequence():
                 return True
             
             else:
-                finalLight()
+                print("allGreen")
+                allGreen()
                 startSignal = 1
+                strip.show()
+                time.sleep(2)
                 #playSound(0)
 
     
@@ -331,18 +253,24 @@ def startLightExpress():
     if cpl.checkpointReached(8) == 1:
         flashGreen()
         allBlue()
+        strip.show()
+        
+    if cpl.checkpointReached(9) == 1:
+        flashBlue()
         
         
+    
+    
+
 def raceEnd():
     allOff()
     strip.show()
     
-allYellow()
-
-        
-        
-        
-        
-        
-
     
+
+#playStartSequence()
+#allRed()
+#strip.show()
+#time.sleep(5)
+#allOff()
+#strip.show()

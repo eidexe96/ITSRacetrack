@@ -36,8 +36,6 @@ if __name__ == '__main__':
 
     try:
         httpd.serve_forever()
-        time.sleep(10)
-        httpd.server_close()
     except KeyboardInterrupt:
         pass
     httpd.server_close()
