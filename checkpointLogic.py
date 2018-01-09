@@ -71,7 +71,9 @@ def saveTime(starttime, checkNr):
 def resetAll(all):
     for item in all:
         item.resetCpt()
-
+        
+def resetGPIOs():
+    GPIO.cleanup()
         
 def roundSum1(all):
     round1 = 0
