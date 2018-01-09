@@ -1,7 +1,8 @@
 from neopixel import *
-import checkpointLogic as cpl                
+import checkpointLogic as cpl
+import sound
 
-LED_COUNT      = 20      # Number of LED pixels.
+LED_COUNT      = 24      # Number of LED pixels.
 LED_PIN        = 18      # GPIO pin connected to the pixels (18 uses PWM!).
 #LED_PIN        = 10      # GPIO pin connected to the pixels (10 uses SPI /dev/spidev0.0).
 LED_FREQ_HZ    = 800000  # LED signal frequency in hertz (usually 800khz)
@@ -95,6 +96,7 @@ def allYellow():
     strip.setPixelColorRGB(21, 255, 255, 0)
     strip.setPixelColorRGB(22, 255, 255, 0)
     strip.setPixelColorRGB(23, 255, 255, 0)
+
     
 def firstLight():
     strip.setPixelColorRGB(0, 0, 255, 0)
@@ -111,16 +113,16 @@ def firstLight():
     strip.setPixelColorRGB(11, 0, 0, 0)
     strip.setPixelColorRGB(12, 0, 0, 0)
     strip.setPixelColorRGB(13, 0, 0, 0)
-    strip.setPixelColorRGB(14, 0, 0, 0)
-    strip.setPixelColorRGB(15, 0, 0, 0)
-    strip.setPixelColorRGB(16, 0, 0, 0)
+    strip.setPixelColorRGB(14, 0, 255, 0)
+    strip.setPixelColorRGB(15, 0, 255, 0)
+    strip.setPixelColorRGB(16, 0, 255, 0)
     strip.setPixelColorRGB(17, 0, 255, 0)
-    strip.setPixelColorRGB(18, 0, 255, 0)
-    strip.setPixelColorRGB(19, 0, 255, 0)
+    strip.setPixelColorRGB(18, 0, 0, 0)
+    strip.setPixelColorRGB(19, 0, 0, 0)
     strip.setPixelColorRGB(20, 0, 255, 0)
-    strip.setPixelColorRGB(21, 0, 0, 0)
+    strip.setPixelColorRGB(21, 0, 255, 0)
     strip.setPixelColorRGB(22, 0, 0, 0)
-    strip.setPixelColorRGB(23, 0, 255, 0)
+    strip.setPixelColorRGB(23, 0, 0, 0)
     
 def secondLight():
     strip.setPixelColorRGB(0, 0, 255, 0)
@@ -130,23 +132,23 @@ def secondLight():
     strip.setPixelColorRGB(4, 0, 255, 0)
     strip.setPixelColorRGB(5, 0, 255, 0)
     strip.setPixelColorRGB(6, 0, 255, 0)
-    strip.setPixelColorRGB(7, 0, 255, 0)
+    strip.setPixelColorRGB(7, 0, 0, 0)
     strip.setPixelColorRGB(8, 0, 0, 0)
     strip.setPixelColorRGB(9, 0, 0, 0)
     strip.setPixelColorRGB(10, 0, 0, 0)
-    strip.setPixelColorRGB(11, 0, 0, 0)
-    strip.setPixelColorRGB(12, 0, 0, 0)
+    strip.setPixelColorRGB(11, 0, 255, 0)
+    strip.setPixelColorRGB(12, 0, 255, 0)
     strip.setPixelColorRGB(13, 0, 255, 0)
     strip.setPixelColorRGB(14, 0, 255, 0)
     strip.setPixelColorRGB(15, 0, 255, 0)
     strip.setPixelColorRGB(16, 0, 255, 0)
     strip.setPixelColorRGB(17, 0, 255, 0)
-    strip.setPixelColorRGB(18, 0, 255, 0)
+    strip.setPixelColorRGB(18, 0, 0, 0)
     strip.setPixelColorRGB(19, 0, 255, 0)
     strip.setPixelColorRGB(20, 0, 255, 0)
-    strip.setPixelColorRGB(21, 0, 0, 0)
+    strip.setPixelColorRGB(21, 0, 255, 0)
     strip.setPixelColorRGB(22, 0, 255, 0)
-    strip.setPixelColorRGB(23, 0, 255, 0)
+    strip.setPixelColorRGB(23, 0, 0, 0)
     
 def thirdLight():
     strip.setPixelColorRGB(0, 0, 255, 0)
@@ -233,6 +235,25 @@ def flashGreen():
     strip.show()
     time.sleep(0.1)
     finalLight()
+    strip.show()
+    time.sleep(0.3)
+    allOff()
+    strip.show()
+    
+def flashBlue():
+    allBlue()
+    strip.show()
+    time.sleep(0.3)
+    allOff()
+    strip.show()
+    time.sleep(0.1)
+    allBlue()
+    strip.show()
+    time.sleep(0.3)
+    allOff()
+    strip.show()
+    time.sleep(0.1)
+    allBlue()
     strip.show()
     time.sleep(0.3)
     allOff()
@@ -330,6 +351,10 @@ def startLightExpress():
     if cpl.checkpointReached(8) == 1:
         flashGreen()
         allBlue()
+        strip.show()
+        
+    if cpl.checkpointReached(9) == 1:
+        flashBlue()
         
         
 def raceEnd():
