@@ -3,6 +3,7 @@ import time
 import checkpointLogic as cpl
 #import sound
 
+
 LED_COUNT      = 24      # Number of LED pixels.
 LED_PIN        = 18      # GPIO pin connected to the pixels (18 uses PWM!).
 #LED_PIN        = 10      # GPIO pin connected to the pixels (10 uses SPI /dev/spidev0.0).
@@ -18,26 +19,28 @@ strip = Adafruit_NeoPixel(LED_COUNT, LED_PIN, LED_FREQ_HZ, LED_DMA, LED_INVERT)
 # Intialize the library (must be called once before other functions).
 strip.begin()
 
-#strip.setPixelColorRGB(0, Rot, Blau, Grün)
+#strip.setPixelColorRGB(0, Grün, Rot, Blau)
     
 def allOff():
     for x in range(24):
         strip.setPixelColorRGB(x, 0, 0, 0)
     
     
+
 def allGreen():
     for x in range(24):
-        strip.setPixelColorRGB(x, 0, 0, 255)
+        strip.setPixelColorRGB(x, 255, 0, 0)
+
     
 def allYellow():
     for x in range(24):
-        strip.setPixelColorRGB(x, 255, 0, 255)
+        strip.setPixelColorRGB(x, 255, 255, 0)
 
 def firstLight():
-    strip.setPixelColorRGB(0, 255, 0, 0)
-    strip.setPixelColorRGB(1, 255, 0, 0)
-    strip.setPixelColorRGB(2, 255, 0, 0)
-    strip.setPixelColorRGB(3, 255, 0, 0)
+    strip.setPixelColorRGB(0, 0, 255, 0)
+    strip.setPixelColorRGB(1, 0, 255,  0)
+    strip.setPixelColorRGB(2, 0, 255,  0)
+    strip.setPixelColorRGB(3, 0, 255,  0)
     strip.setPixelColorRGB(4, 0, 0, 0)
     strip.setPixelColorRGB(5, 0, 0, 0)
     strip.setPixelColorRGB(6, 0, 0, 0)
@@ -48,51 +51,52 @@ def firstLight():
     strip.setPixelColorRGB(11, 0, 0, 0)
     strip.setPixelColorRGB(12, 0, 0, 0)
     strip.setPixelColorRGB(13, 0, 0, 0)
-    strip.setPixelColorRGB(14, 255, 0, 0)
-    strip.setPixelColorRGB(15, 255, 0, 0)
-    strip.setPixelColorRGB(16, 255, 0, 0)
-    strip.setPixelColorRGB(17, 255, 0, 0)
+    strip.setPixelColorRGB(14, 0, 255, 0)
+    strip.setPixelColorRGB(15, 0, 255, 0)
+    strip.setPixelColorRGB(16, 0, 255, 0)
+    strip.setPixelColorRGB(17, 0, 255, 0)
     strip.setPixelColorRGB(18, 0, 0, 0)
     strip.setPixelColorRGB(19, 0, 0, 0)
-    strip.setPixelColorRGB(20, 255, 0, 0)
-    strip.setPixelColorRGB(21, 255, 0, 0)
+    strip.setPixelColorRGB(20, 0, 255, 0)
+    strip.setPixelColorRGB(21, 0, 255, 0)
     strip.setPixelColorRGB(22, 0, 0, 0)
     strip.setPixelColorRGB(23, 0, 0, 0)
     
 def secondLight():
-    strip.setPixelColorRGB(0, 255, 0, 0)
-    strip.setPixelColorRGB(1, 255, 0, 0)
-    strip.setPixelColorRGB(2, 255, 0, 0)
-    strip.setPixelColorRGB(3, 255, 0, 0)
-    strip.setPixelColorRGB(4, 255, 0, 0)
-    strip.setPixelColorRGB(5, 255, 0, 0)
-    strip.setPixelColorRGB(6, 255, 0, 0)
+    strip.setPixelColorRGB(0, 0, 255, 0)
+    strip.setPixelColorRGB(1, 0, 255, 0)
+    strip.setPixelColorRGB(2, 0, 255, 0)
+    strip.setPixelColorRGB(3, 0, 255, 0)
+    strip.setPixelColorRGB(4, 0, 255, 0)
+    strip.setPixelColorRGB(5, 0, 255, 0)
+    strip.setPixelColorRGB(6, 0, 255, 0)
     strip.setPixelColorRGB(7, 0, 0, 0)
     strip.setPixelColorRGB(8, 0, 0, 0)
     strip.setPixelColorRGB(9, 0, 0, 0)
     strip.setPixelColorRGB(10, 0, 0, 0)
-    strip.setPixelColorRGB(11, 255, 0, 0)
-    strip.setPixelColorRGB(12, 255, 0, 0)
-    strip.setPixelColorRGB(13, 255, 0, 0)
-    strip.setPixelColorRGB(14, 255, 0, 0)
-    strip.setPixelColorRGB(15, 255, 0, 0)
-    strip.setPixelColorRGB(16, 255, 0, 0)
-    strip.setPixelColorRGB(17, 255, 0, 0)
+    strip.setPixelColorRGB(11, 0, 255, 0)
+    strip.setPixelColorRGB(12, 0, 255, 0)
+    strip.setPixelColorRGB(13, 0, 255, 0)
+    strip.setPixelColorRGB(14, 0, 255, 0)
+    strip.setPixelColorRGB(15, 0, 255, 0)
+    strip.setPixelColorRGB(16, 0, 255, 0)
+    strip.setPixelColorRGB(17, 0, 255, 0)
     strip.setPixelColorRGB(18, 0, 0, 0)
-    strip.setPixelColorRGB(19, 255, 0, 0)
-    strip.setPixelColorRGB(20, 255, 0, 0)
-    strip.setPixelColorRGB(21, 255, 0, 0)
-    strip.setPixelColorRGB(22, 255, 0, 0)
+    strip.setPixelColorRGB(19, 0, 255, 0)
+    strip.setPixelColorRGB(20, 0, 255, 0)
+    strip.setPixelColorRGB(21, 0, 255, 0)
+    strip.setPixelColorRGB(22, 0, 255, 0)
     strip.setPixelColorRGB(23, 0, 0, 0)
+
     
 def allRed():
     for x in range(24):
-        strip.setPixelColorRGB(x, 255, 0, 0)
+        strip.setPixelColorRGB(x, 0, 255, 0)
     
 
 def allBlue():
     for x in range(24):
-        strip.setPixelColorRGB(x, 0, 255, 0)
+        strip.setPixelColorRGB(x, 0, 0, 255)
     
     
 def flashRed():                                  #Lichtsignal bei Fehlstart
@@ -151,6 +155,7 @@ def flashBlue():
     time.sleep(0.3)
     allOff()
     strip.show()
+
     
 def playStartSequence():
     #playSound(-2)
@@ -162,6 +167,9 @@ def playStartSequence():
     check = False #cpl.checkpointReached(0)
     if check == True:                  
         print("Fehlstart")
+        allOff()
+        strip.show()
+        time.sleep(0.5)
         flashRed()
         #playSound('')               #Hier fehlt noch Variable für Loser Sound
         allOff()
@@ -177,6 +185,9 @@ def playStartSequence():
         check = False #cpl.checkpointReached(0)
         if check == True:
             print("Fehlstart")
+            allOff()
+            strip.show()
+            time.sleep(0.5)
             flashRed()
             #playSound('')
             allOff()
@@ -192,6 +203,9 @@ def playStartSequence():
             check = False #cpl.checkpointReached(0)
             if check == True:
                 print("Fehlstart")
+                allOff()
+                strip.show()
+                time.sleep(0.5)
                 flashRed()
                 #playSound('')
                 allOff()
@@ -205,6 +219,8 @@ def playStartSequence():
                 strip.show()
                 time.sleep(2)
                 #playSound(0)
+                allOff()
+                strip.show()
 
     
 def stopLightExpress():
@@ -232,31 +248,8 @@ def stopLightExpress():
 
 
 def startLightExpress():
-    if cpl.checkpointReached(2) == 1:
-        flashGreen()
-        
-    if cpl.checkpointReached(3) == 1:
-        flashGreen()
-        
-    if cpl.checkpointReached(4) == 1:
-        flashGreen()
-        
-    if cpl.checkpointReached(5) == 1:
-        flashGreen()
-        
-    if cpl.checkpointReached(6) == 1:
-        flashGreen()
-        
-    if cpl.checkpointReached(7) == 1:
-        flashGreen()
-       
-    if cpl.checkpointReached(8) == 1:
-        flashGreen()
         allBlue()
         strip.show()
-        
-    if cpl.checkpointReached(9) == 1:
-        flashBlue()
         
         
     
@@ -272,5 +265,6 @@ def raceEnd():
 #allRed()
 #strip.show()
 #time.sleep(5)
+#stopLightExpress()
 #allOff()
 #strip.show()

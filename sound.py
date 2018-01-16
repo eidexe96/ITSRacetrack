@@ -4,6 +4,7 @@ import math
 global min
 global sec
 global text
+
 #speech synthesis functions
 
 def time_convert(t):
@@ -12,8 +13,8 @@ def time_convert(t):
 
 def playSpeech(check, teamID):
     
-    if check == 1 or check == 2 or check == 3 or check == 5 or check == 6 or check == 7:
-        z = randint(1,10)
+    if check == 0 or check == 2 or check == 3 or check == 5 or check == 6 or check == 7:
+        z = randint(1,3)
         if z == 1:
             text = "Beispiel 1"
         elif z == 2:
@@ -24,16 +25,16 @@ def playSpeech(check, teamID):
             text = ""
             
     elif check == 4:
-        z = randint(1,5)
+        z = randint(1,3)
         if z == 1:
-            text = "Beispiel 1"
+            text = "So schlecht war Tiem 1 noch nie"
         elif z == 2:
-            text = "Beispiel 2"
+            text = "So schlecht war Tiem 1 noch nie"
         elif z == 3:
-            text = "Beispiel 3"
+            text = "So schlecht war Tiem 1 noch nie"
             
     elif check == 8:
-        z = randint(1,5)
+        z = randint(1,3)
         if z == 1:
             text = "Beispiel 1"
         elif z == 2:
@@ -41,7 +42,7 @@ def playSpeech(check, teamID):
         elif z == 3:
             text = "Beispiel 3"
     
-    call(["espeak", "-vmb-de4", text, "2>/dev/null"])
+    call(["espeak", "-vmb-de5", text, "2>/dev/null"])
 
 def s_speech(var2):
     call(["pico2wave", "-lang=de-DE", "-wave=/home/pi/work/sound/test.wav", var2])
@@ -69,10 +70,9 @@ def playSound(check):
     elif check == 9:
         sound = "end_good.wav"
     
-    call(["aplay", "/home/pi/its/ITSRacetrack/sounds/"+sound])
+    call(["aplay", "/home/pi/work/its/ITSRacetrack/sounds/"+sound])
         
     
     
-    
-
-
+#playSound(-3)
+#playSpeech(4,3)

@@ -1,14 +1,24 @@
 import time
-import writeToDb
+import writeToDb as wtdb
 import RPi.GPIO as GPIO
 GPIO.setmode(GPIO.BCM)
+
+global time01
+global time12
+global time23
+global time30
+global bestround
+global totalTime
+
+
+
 
 class checkpt:
     'Base class for all Checkpoints'
     count = 0
     allCpts = []
     
-    def __init__(self, nr, outputPin, inputPin, time1=0, time2=0, check1 = False, check2 = False):
+    def __init__(self, nr, outputPin, inputPin, time1=0, time2=0, check1 = False, check2 = False, round1 = 0, round2 = 0):
         self.nr = nr
         self.time1 = time1
         self.time2 = time2
@@ -37,18 +47,22 @@ class checkpt:
 
     
     def savePartTime(self, starttime):
-        if (self.starttime != 0):
+        if (starttime != 0):
             if (self.check1 == False):
-                self.time1 = time.clock() - starttime
+                self.time1 = time.time() - starttime
+                self.round1 = time.time() - starttime
                 self.check1 = True
+                print("time1 set")
             elif (self.check2 == False):
-                self.time2 = time.clock() - starttime
+                self.time2 = time.time() - starttime
+                self.round2 = time.time() - starttime
                 self.check2 = True
+                print("time2 set")
 
-cp0 = checkpt(0, 4, 21)
-cp1 = checkpt(1, 22, 16)
-cp2 = checkpt(2, 17, 25)
-cp3 = checkpt(3, 5, 24)
+cp0 = checkpt(0, 4, 17)
+cp1 = checkpt(1, 5, 6)
+cp2 = checkpt(2, 23, 24)
+cp3 = checkpt(3, 16, 20)
 
 cp0.assignPins()
 cp1.assignPins()
@@ -59,19 +73,21 @@ cp3.assignPins()
 
 def saveTime(starttime, checkNr):
     if (checkNr == 0):
-        cp0.savePartTime
+        cp0.savePartTime(starttime)
     elif (checkNr == 1):
-        cp1.savePartTime
+        cp1.savePartTime(starttime)
     elif (checkNr == 2):
-        cp2.savePartTime
+        cp2.savePartTime(starttime)
     elif (checkNr == 3):
-        cp3.savePartTime
-                
+        cp3.savePartTime(starttime)
+    print(checkNr)
 
 def resetAll(all):
     for item in all:
         item.resetCpt()
-
+        
+def resetGPIOs():
+    GPIO.cleanup()
         
 def roundSum1(all):
     round1 = 0
@@ -100,6 +116,7 @@ def checkpointReached(checkNr):
 
     
 def prepareDataForDB(teamid):
+    totalTime = 2
     time101 = cp1.time1
     time201 = cp1.time2 - cp0.time1
     if (time101<=time201):            #determine best time for part 1
@@ -115,7 +132,7 @@ def prepareDataForDB(teamid):
         time12 = time212
     
     time123 = cp3.time1 - cp2.time1
-    time212 = cp3.time2 - cp2.time2
+    time223 = cp3.time2 - cp2.time2
     if (time123<=time223):            #determine best time for part 3
         time23 = time123
     else:
@@ -127,9 +144,9 @@ def prepareDataForDB(teamid):
         time30 = time130
     else:
         time30 = time230        
-        
-    round1 = roundSum1(checkpt.allCpts)
-    round2 = roundSum2(checkpt.allCpts)
+    
+    round1 = cp0.round1
+    round2 = cp0.round2-cp0.round1
     if (round1 <= round2):
         bestround = round1            #determine best lap time
     else:
@@ -137,5 +154,7 @@ def prepareDataForDB(teamid):
     
     totalTime = round1 + round2
     
-    writetoDB(teamid, totalTime, bestround, time01, time12, time23, time30, 0) #0 place holder if needed
+    GPIO.cleanup()
     
+    #teamid, totalTime, bestround, time01, time12, time23, time30, "ijöööö") #0 place holder if needed
+    wtdb.writeToDb(teamid, round(totalTime,0), round(bestround,0), round(time01,0), round(time12,0), round(time23,0), round(time30,0), "ijöööö")
