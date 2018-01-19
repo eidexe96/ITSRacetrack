@@ -1,7 +1,7 @@
 from neopixel import *
 import time
 import checkpointLogic as cpl
-#import sound
+import sound
 
 
 LED_COUNT      = 24      # Number of LED pixels.
@@ -158,12 +158,12 @@ def flashBlue():
 
     
 def playStartSequence():
-    #playSound(-2)
+    sound.playSound(-2)
     print("firstLight")
     firstLight()
     strip.show()
-    time.sleep(2)
-    #playSound(-1)
+    #time.sleep(2)
+    sound.playSound(-1)
     check = False #cpl.checkpointReached(0)
     if check == True:                  
         print("Fehlstart")
@@ -171,7 +171,7 @@ def playStartSequence():
         strip.show()
         time.sleep(0.5)
         flashRed()
-        #playSound('')               #Hier fehlt noch Variable für Loser Sound
+        sound.playSound('')               #Hier fehlt noch Variable für Loser Sound
         allOff()
         strip.show()
         return True               
@@ -180,8 +180,8 @@ def playStartSequence():
         print("SecondLight")
         secondLight()
         strip.show()
-        time.sleep(2)
-        #playSound(-1)
+        #time.sleep(2)
+        sound.playSound(-1)
         check = False #cpl.checkpointReached(0)
         if check == True:
             print("Fehlstart")
@@ -189,7 +189,7 @@ def playStartSequence():
             strip.show()
             time.sleep(0.5)
             flashRed()
-            #playSound('')
+            #sound.playSound('')
             allOff()
             strip.show()
             return True
@@ -198,8 +198,8 @@ def playStartSequence():
             print("allRed")
             allRed()
             strip.show()
-            time.sleep(2)
-            #playSound(-1)
+            #time.sleep(2)
+            sound.playSound(-1)
             check = False #cpl.checkpointReached(0)
             if check == True:
                 print("Fehlstart")
@@ -207,7 +207,7 @@ def playStartSequence():
                 strip.show()
                 time.sleep(0.5)
                 flashRed()
-                #playSound('')
+                sound.playSound('')
                 allOff()
                 strip.show()
                 return True
@@ -217,8 +217,8 @@ def playStartSequence():
                 allGreen()
                 startSignal = 1
                 strip.show()
-                time.sleep(2)
-                #playSound(0)
+                #time.sleep(2)
+                sound.playSound(0)
                 allOff()
                 strip.show()
 

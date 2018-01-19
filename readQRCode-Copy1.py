@@ -1,34 +1,39 @@
+#import pygame
+import pygame.camera
+from pygame.locals import *
 from PIL import Image
 import zbarlight
-import cv2
-import time    
     
-    
+
 def takePicture():
     print("enter takePicture")
-    
-    cap = cv2.VideoCapture(0)
-    print("Video captured")
-    ret, frame = cap.read()
-    print("frame read")
-    
-    fp = "qrphoto.jpg"
-    print("picture saved")
-    cv2.imwrite(fp, frame)
-    
-    print ("leave takePicture")
+    #pygame.init()
+    #print("pygame init")
+    pygame.camera.init()
+    print ("pygame camera init")
+    cam = pygame.camera.Camera("/dev/video0",(320,240))
+    print("cam define")
+    cam.start()
+    print("camstart")
+    img = cam.get_image()
+    print("img define")
+    pygame.image.save(img,"./qrphoto/qrphoto.jpg")
+    print("pygame image save")
+    cam.stop()
+    print("camstop")
+    pygame.quit()
+    print("leave takePicture")
 
 
 def qrRead():
     print("enter qrRead")
-    file_path = 'qrphoto.jpg'
+    file_path = './qrphoto/qrphoto.jpg'
     with open(file_path, 'rb') as image_file:
         image = Image.open(image_file)
         image.load()
         
-    
+    codes = [b'1']
     codes = zbarlight.scan_codes('qrcode', image)
-    #codes = 5
     if codes == [b'1']:
         codes = 1
     elif codes == [b'2']:
@@ -57,7 +62,7 @@ def qrRead():
 def readQRCode():
     print("enter readQRCode")
     takePicture()
-    time.sleep(1)
     teamid = qrRead()
     print("leave readQRCode")
     return teamid
+
