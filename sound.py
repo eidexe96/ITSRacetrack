@@ -5,6 +5,9 @@ global min
 global sec
 global text
 global sound
+import light as lit
+import time
+
 
 #speech synthesis functions
 
@@ -58,18 +61,27 @@ def playSound(check):
     
     if check == -3:
         sound = "scan.wav" 
+        
     elif check == -2:
         sound = "start.wav"
+        
     elif check == -1:
         sound = "beep_1.wav"
+        
     elif check == 0:
         sound = "beep_2.wav"
-    elif check == 2 or check == 3 or check == 5 or check == 6 or check == 7 or check == 1:
+        
+    elif check == 2 or check == 3 or check == 5 or check == 6 or check == 1:
         sound = "checkpoint.wav"
+    elif check == 7:
+        sound = "checkpoint.wav"
+        lit.allBlue()
+        lit.strip.show()
     elif check == 4:
         sound = "2nd_lap.wav"
     elif check == 8:
         sound = "end_good.wav"
+
     
     call(["aplay", "/home/pi/work/its/ITSRacetrack/sounds/"+sound])
         
