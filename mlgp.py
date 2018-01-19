@@ -49,14 +49,15 @@ def startProgramm(teamid):
             print("cpReached")
             cpl.saveTime(starttime, activeCheckpoint % 4)
             #_thread.start_new_thread(lit.startLightExpress,()
-            #_thread.start_new_thread(sound.playSound,(activeCheckpoint))
+            _thread.start_new_thread(sound.playSound,(activeCheckpoint,))
             #_thread.start_new_thread(sound.playSpeech,(activeCheckpoint, teamid))
             rslt.showResults(activeCheckpoint, teamid, starttime)        #Zeigt Ergebnisse
             activeCheckpoint += 1
             print("nextCheckpoint:")
             print(activeCheckpoint)
         if activeCheckpoint == 8:
-            _thread.start_new_thread(lit.startLightExpress,())
+            x=0#lit.startLightExpress()
+            #_thread.start_new_thread(lit.startLightExpress,())
         if activeCheckpoint == 9:                                         #beendet das Rennen, speichert und zeigt Ergebnisse
             cpl.prepareDataForDB(teamid)                                  #rechnet einzelne Zeiten aus und schreibt diese in die DB
             rslt.showResults(9, teamid, starttime)

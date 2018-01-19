@@ -4,6 +4,7 @@ import math
 global min
 global sec
 global text
+global sound
 
 #speech synthesis functions
 
@@ -63,11 +64,11 @@ def playSound(check):
         sound = "beep_1.wav"
     elif check == 0:
         sound = "beep_2.wav"
-    elif check == 2 or check == 3 or check == 4 or check == 6 or check == 7 or check == 8:
+    elif check == 2 or check == 3 or check == 5 or check == 6 or check == 7 or check == 1:
         sound = "checkpoint.wav"
-    elif check == 5:
+    elif check == 4:
         sound = "2nd_lap.wav"
-    elif check == 9:
+    elif check == 8:
         sound = "end_good.wav"
     
     call(["aplay", "/home/pi/work/its/ITSRacetrack/sounds/"+sound])
