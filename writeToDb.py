@@ -30,5 +30,5 @@ def writeToDb(teamid, gesamtzeit, rundenzeit, zeit01, zeit12, zeit23, zeit30, li
     #inputdf = pd.DataFrame({ 'Teammitglieder' : [teammitglieder], 'Teamname' : [teamname],'BesteGesamtzeit' : [gesamtzeit], 'Rundenzeit' : [rundenzeit], 'Bestzeit01' : [zeit01], 'Bestzeit12' : [zeit12], 'Bestzeit23' : [zeit23], 'Bestzeit30' : [zeit30], 'Info' : [info], 'LiveZeit' : [liveZeit], 'Datum' : [rightnow]})
     
     with open('test.csv', 'a') as fd:
-        fd.write('%s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s \n'%(teamname, teammitglieder, gesamtzeit, rundenzeit, zeit01, zeit12, zeit23, zeit30, info, liveZeit, rightnow))
+        fd.write('%s, %s, %s, %s, %s, %s, %s, %s, %s, %s, \n'%(teamname, teammitglieder, gesamtzeit, rundenzeit, zeit01, zeit12, zeit23, zeit30, info, rightnow))
  

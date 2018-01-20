@@ -1,4 +1,4 @@
-import pandas as pd
+﻿import pandas as pd
 import time
 import math
 
@@ -30,12 +30,13 @@ def showResults(activeCheckpoint, teamid, starttime):
     elif activeCheckpoint > 0 and activeCheckpoint < 9:
         #show Live Time
         dt = time.time() - starttime
-        livetime = str(math.floor(dt/60))
+        livetime = "Checkpoint ", activeCheckpoint %4, " erreicht in " 
+        livetime += str(math.floor(dt/60))
         livetime += " Minuten "
         livetime += str(round(dt%60))
-        livetime += " Sekunden"
+        livetime += " Sekunden."
         htmlOut= open(htmlpage,"w")
-        html = ''''<html><head><style>body {background: linear-gradient(#16171d, #3b1218);color: #315153;font-family: 'Open Sans', sans-serif;}table {border-collapse: collapse;border:0px solid;width: 100%;}td{border:0px;min-width: 65px;height: 35px;}th{border:0px;color: #962d3e;}th,td{text-align:center;vertical-align: middle;border-bottom: 1px solid #131f20;}tr:hover {background-color: #962d3e;color:white;}h1{text-align: center;color:dcd4eb;}</style><link href="https://fonts.googleapis.com/css?family=Open+Sans:300,400" rel="stylesheet"><title>Racing Info</title><meta http-equiv="refresh" content="5"></head><body><h1>Racing Infos here</h1><p id="livetime">''' 
+        html = ''''<html><head><style>#livetime{text-align:center;vertical-align:middle;}body {background: linear-gradient(#16171d, #3b1218);color: #315153;font-family: 'Open Sans', sans-serif;}table {border-collapse: collapse;border:0px solid;width: 100%;}td{border:0px;min-width: 65px;height: 35px;}th{border:0px;color: #962d3e;}th,td{text-align:center;vertical-align: middle;border-bottom: 1px solid #131f20;}tr:hover {background-color: #962d3e;color:white;}h1{text-align: center;color:dcd4eb;}</style><link href="https://fonts.googleapis.com/css?family=Open+Sans:300,400" rel="stylesheet"><title>Racing Info</title><meta http-equiv="refresh" content="5"></head><body><h1>Racing Infos here</h1><p id="livetime">''' 
         html += livetime      #aktuell gefahrene Zeit seit Start
         html +='</p><p>presented by Team Racetrack</p></body></html>' 
         htmlOut.write(html)

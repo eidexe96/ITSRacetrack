@@ -1,4 +1,4 @@
-import time
+﻿import time
 print("imported time")
 time.sleep(1)
 import showResults as rslt
@@ -68,8 +68,8 @@ def startProgramm(teamid):
             lit.raceEnd()
             print("Rennen beendet")
             #while 1:
-            time.sleep(1)
-            print("time slept")
+            #time.sleep(1)
+            #print("time slept")
             activeCheckpoint = 1
             teamid=0
             break
