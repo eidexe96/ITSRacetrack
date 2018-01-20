@@ -71,14 +71,17 @@ def playSound(check):
     elif check == 0:
         sound = "beep_2.wav"
         
-    elif check == 2 or check == 3 or check == 5 or check == 6 or check == 1:
+    elif check == 1 or check == 2 or check == 3 or check == 5 or check == 6:
         sound = "checkpoint.wav"
+        
     elif check == 7:
         sound = "checkpoint.wav"
         lit.allBlue()
         lit.strip.show()
+        
     elif check == 4:
         sound = "2nd_lap.wav"
+        
     elif check == 8:
         sound = "end_good.wav"
 
