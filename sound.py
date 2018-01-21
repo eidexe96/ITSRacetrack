@@ -57,7 +57,7 @@ def s_speech(var2):
     
 #sound function
 
-def playSound(check, time):
+def playSound(teamid, check, time):
     
     if check == -3:
         sound = "scan.wav" 
@@ -82,14 +82,20 @@ def playSound(check, time):
     elif check == 4:
         sound = "2nd_lap.wav"
         
-    elif check == 8 and time < x:
-        sound = "end_good.wav"
-    
     elif check == 8:
-        sound = "end_bad.wav"
+        _,_,_,_,_,_,_,_,_,4th_best_gesamt = readData(teamid)
+        
+        if starttime < 4th_best_gesamt:
+            sound = "end_good.wav"
+        else:
+            sound = "end_bad.wav"
 
     
     call(["aplay", "/home/pi/work/its/ITSRacetrack/sounds/"+sound])
+    
+    if check == 8:
+        time.sleep(8)
+        playSpeech(check, teamid)
         
     
     
