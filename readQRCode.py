@@ -61,3 +61,7 @@ def readQRCode():
     teamid = qrRead()
     print("leave readQRCode")
     return teamid
+
+def qrAlternative():
+    teamid = input("Bitte Team-ID eingeben: ")
+    return teamid
