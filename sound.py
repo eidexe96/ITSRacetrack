@@ -57,9 +57,11 @@ def s_speech(var2):
     
 #sound function
 
-def playSound(teamid, check, starttime):
-    
-    if check == -3:
+def playSound(check, teamid, starttime):
+    if check == -4
+        sound = "boing.wav"
+        
+    elif check == -3:
         sound = "scan.wav" 
         
     elif check == -2:

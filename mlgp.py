@@ -52,7 +52,7 @@ def startProgramm(teamid):
             print("cpReached")
             cpl.saveTime(starttime, activeCheckpoint % 4)
             #_thread.start_new_thread(lit.startLightExpress,()
-            _thread.start_new_thread(sound.playSound,(activeCheckpoint,))
+            _thread.start_new_thread(sound.playSound,(activeCheckpoint, teamid, starttime))
             #_thread.start_new_thread(sound.playSpeech,(activeCheckpoint, teamid), )
             rslt.showResults(activeCheckpoint, teamid, starttime)        #Zeigt Ergebnisse
             activeCheckpoint += 1
@@ -79,7 +79,7 @@ def startProgramm(teamid):
 
 
 
-
+playSound(-4)
 try:
     
     print("Starting Programm")
