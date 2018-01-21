@@ -57,7 +57,7 @@ def s_speech(var2):
     
 #sound function
 
-def playSound(check):
+def playSound(check, time):
     
     if check == -3:
         sound = "scan.wav" 
@@ -82,8 +82,11 @@ def playSound(check):
     elif check == 4:
         sound = "2nd_lap.wav"
         
-    elif check == 8:
+    elif check == 8 and time < x:
         sound = "end_good.wav"
+    
+    elif check == 8:
+        sound = "end_bad.wav"
 
     
     call(["aplay", "/home/pi/work/its/ITSRacetrack/sounds/"+sound])
