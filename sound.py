@@ -57,7 +57,7 @@ def s_speech(var2):
     
 #sound function
 
-def playSound(teamid, check, time_now):
+def playSound(teamid, check, starttime):
     
     if check == -3:
         sound = "scan.wav" 
@@ -83,8 +83,8 @@ def playSound(teamid, check, time_now):
         sound = "2nd_lap.wav"
         
     elif check == 8:
-        4th_best_gesamt = readData(teamid)[]
-        
+        4th_best_gesamt = readData(teamid)[8]
+        time_now = time.time() - starttime
         if time_now < 4th_best_gesamt:
             sound = "end_good.wav"
         else:
