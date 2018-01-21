@@ -95,7 +95,7 @@ def playSound(teamid, check, time_now):
     
     if check == 8:
         time.sleep(8)
-        playSpeech(check, teamid)
+        playSpeech(check, teamid, time_now)
         
     
     
