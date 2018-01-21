@@ -1,7 +1,7 @@
 from subprocess import call
 from random import randint
 import math
-global min
+global minu
 global sec
 global text
 global sound
