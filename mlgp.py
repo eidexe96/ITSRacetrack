@@ -78,8 +78,10 @@ def startProgramm(teamid):
                
 
 
-
 playSound(-4)
+
+#teamid = qrAlternative() #Falls der QR-Code Reader nicht geht, dies aktivieren und TeamID über Tastatur eingeben.
+
 try:
     
     print("Starting Programm")
