@@ -694,7 +694,7 @@ def s_speech(var2):
 
 def playSound(check, teamid, starttime):
     if check == -4
-        sound = "boing.wav"
+        sound = "beep_1.wav"
         
     elif check == -3:
         sound = "scan.wav" 
