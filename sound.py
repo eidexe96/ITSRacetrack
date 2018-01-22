@@ -734,5 +734,3 @@ def playSound(check, teamid, starttime):
         
     
     
-#playSound(-3)
-#playSpeech(4,3)
