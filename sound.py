@@ -666,19 +666,16 @@ def commentary(check, d_TeamName, best_runde, best_gesamt, worst_runde, worst_ge
 #Kommentartext vorlesen mit Sprachsynthese:
 
 def synthesis(text):
-    if len(text) > 80:
-        speed = "-s 400"
-    else
-        speed ="-s 100"
-        
+    
+    speed = 200
     call(["espeak", "-vmb-de4", "-a 80" , speed, text, "2>/dev/null"])
     
 def playSpeech(check, teamid):
     TeamName, d_TeamName = IDconvert(teamid)
     
-    best_runde, best_gesamt, worst_runde, worst_gesamt, bestP_runde, bestP_gesamt, worstP_runde, worstP_gesamt = readData(TeamName)
+    best_runde, best_gesamt, worst_runde, worst_gesamt, bestP_runde, bestP_gesamt, worstP_runde, worstP_gesamt, 4th_best_gesamt, 4th_best_runde = readData(TeamName)
     
-    text = commentary(check, d_TeamName, best_runde, best_gesamt, worst_runde, worst_gesamt, bestP_runde, bestP_gesamt, worstP_runde, worstP_gesamt)
+    text = commentary(best_runde, best_gesamt, worst_runde, worst_gesamt, bestP_runde, bestP_gesamt, worstP_runde, worstP_gesamt, 4th_best_gesamt, 4th_best_runde)
     
     synthesis(text)
 
