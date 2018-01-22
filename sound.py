@@ -730,6 +730,7 @@ def playSound(check, teamid, starttime):
     if check == 8:
         time.sleep(8)
         playSpeech(check, teamid, time_now)
+        time.spleep(10)
         
     
     
