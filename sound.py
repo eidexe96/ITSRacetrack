@@ -718,7 +718,7 @@ def playSound(check, teamid, starttime):
         
     elif check == 8:
         4th_best_gesamt = readData(teamid)[8]
-        time_now = time.time() - starttime
+        time_now = time.time() - starttime 
         if time_now < 4th_best_gesamt:
             sound = "end_good.wav"
         else:
@@ -729,6 +729,7 @@ def playSound(check, teamid, starttime):
     
     if check == 8:
         time.sleep(8)
+        time_now = time_now - 8
         playSpeech(check, teamid, time_now)
         time.spleep(10)
         
