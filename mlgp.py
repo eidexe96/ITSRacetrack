@@ -1,4 +1,4 @@
-﻿import time
+import time
 print("imported time")
 time.sleep(1)
 import showResults as rslt
@@ -47,7 +47,7 @@ def startProgramm(teamid):
     print(teamid)
     starttime = time.time()                     #startet die Zeitmessung unabhängig davon, ob das Auto zu spät los fährt
     print("waiting for checkpoints")
-    while True:                                  #Loop für Rennen, Messung etc.
+    while teamid != 0:                                  #Loop für Rennen, Messung etc.
         if cpl.checkpointReached(activeCheckpoint % 4):
             print("cpReached")
             cpl.saveTime(starttime, activeCheckpoint % 4)
@@ -61,24 +61,21 @@ def startProgramm(teamid):
         if activeCheckpoint == 8:
             x=0 #lit.startLightExpress()
             #_thread.start_new_thread(lit.startLightExpress,())
-        if activeCheckpoint == 10:                                         #beendet das Rennen, speichert und zeigt Ergebnisse
+        if activeCheckpoint == 9:                                         #beendet das Rennen, speichert und zeigt Ergebnisse
             cpl.prepareDataForDB(teamid)                                  #rechnet einzelne Zeiten aus und schreibt diese in die DB
             rslt.showResults(9, teamid, starttime)
             rslt.showTime(starttime)
             lit.raceEnd()
             print("Rennen beendet")
-            #while 1:
-            #time.sleep(1)
-            #print("time slept")
+            time.sleep(6)
+            sound.playSpeech(9, teamid, starttime)
             activeCheckpoint = 1
             teamid=0
-            break
+            cpl.resetAll()
+            #break
      
     
                
-
-
-sound.playSound(-4)
 
 #qr.teamid = qrAlternative() #Falls der QR-Code Reader nicht geht, dies aktivieren und TeamID über Tastatur eingeben.
 
@@ -90,7 +87,11 @@ try:
         teamid = qr.readQRCode()
         if teamid != 0:
             startProgramm(teamid)
+            print("sleep")
+            time.sleep(8)
+            sound.playSound(-4)
 except KeyboardInterrupt:
     print("Programm aborted")
     lit.raceEnd()
+    cpl.GPIO.cleanup()
     pass

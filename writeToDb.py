@@ -13,7 +13,7 @@ def writeToDb(teamid, gesamtzeit, rundenzeit, zeit01, zeit12, zeit23, zeit30, li
         info="empty"
     elif(teamid == 3):
         teamname = "Team 2"
-        teammitglieder = "Joern; Darius; Miro"
+        teammitglieder = "Joern; Darius; Mirco"
         info="Das ist doch egal! Das ist eh nur vorlaeufig..."
     elif(teamid == 4):
         teamname = "Pink Danger"
@@ -23,6 +23,10 @@ def writeToDb(teamid, gesamtzeit, rundenzeit, zeit01, zeit12, zeit23, zeit30, li
         teamname = "Racing Team 1"
         teammitglieder = "Jannika; Hauke; Simon"
         info= "empty"
+    elif(teamid == 7):
+        teamname = "The Highspeedcoder"
+        teammitglieder = "Flo; Michel; Fabian"
+        info= ""
     else:
         return "error"
     
@@ -30,5 +34,5 @@ def writeToDb(teamid, gesamtzeit, rundenzeit, zeit01, zeit12, zeit23, zeit30, li
     #inputdf = pd.DataFrame({ 'Teammitglieder' : [teammitglieder], 'Teamname' : [teamname],'BesteGesamtzeit' : [gesamtzeit], 'Rundenzeit' : [rundenzeit], 'Bestzeit01' : [zeit01], 'Bestzeit12' : [zeit12], 'Bestzeit23' : [zeit23], 'Bestzeit30' : [zeit30], 'Info' : [info], 'LiveZeit' : [liveZeit], 'Datum' : [rightnow]})
     
     with open('test.csv', 'a') as fd:
-        fd.write('%s, %s, %s, %s, %s, %s, %s, %s, %s, %s, \n'%(teamname, teammitglieder, gesamtzeit, rundenzeit, zeit01, zeit12, zeit23, zeit30, info, rightnow))
+        fd.write('%s, %s, %s, %s, %s, %s, %s, %s, %s, %s \n'%(teamname, teammitglieder, gesamtzeit, rundenzeit, zeit01, zeit12, zeit23, zeit30, info, rightnow))
  

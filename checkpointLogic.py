@@ -59,11 +59,12 @@ class checkpt:
                 self.check2 = True
                 print("time2 set")
 
+                
+                
 cp0 = checkpt(0, 4, 17)
 cp1 = checkpt(1, 5, 6)
 cp2 = checkpt(2, 23, 24)
 cp3 = checkpt(3, 16, 20)
-
 cp0.assignPins()
 cp1.assignPins()
 cp2.assignPins()
@@ -82,9 +83,12 @@ def saveTime(starttime, checkNr):
         cp3.savePartTime(starttime)
     print(checkNr)
 
-def resetAll(all):
-    for item in all:
-        item.resetCpt()
+def resetAll():
+    cp0.resetCpt()
+    cp1.resetCpt()
+    cp2.resetCpt()
+    cp3.resetCpt()
+    
         
 def resetGPIOs():
     GPIO.cleanup()
@@ -154,7 +158,6 @@ def prepareDataForDB(teamid):
     
     totalTime = round1 + round2
     
-    GPIO.cleanup()
     
     #teamid, totalTime, bestround, time01, time12, time23, time30, "ijöööö") #0 place holder if needed
     wtdb.writeToDb(teamid, round(totalTime,0), round(bestround,0), round(time01,0), round(time12,0), round(time23,0), round(time30,0), "ijöööö")

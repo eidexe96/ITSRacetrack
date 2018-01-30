@@ -16,8 +16,12 @@ global sound
 
 def timeConvert(t):
     minu = math.floor(t/60)
-    sec = t%60
-    return(minu,sec)
+    sec = int(round(t%60))
+    if minu != 1:
+        text_m = "Minuten"
+    else:
+        text_m = "Minute"    
+    return(minu,sec,text_m)
 
 #TeamID in TeamName konvertieren
 
@@ -49,16 +53,15 @@ def IDconvert(teamID):
         #d_info = ""
 
     elif(teamID == 7):    
-        TeamName = ""
-        d_TeamName = ""
+        TeamName = "The Highspeedcoder"
+        d_TeamName = "Tiem sö Heispiedkoda"
         #d_info = ""
 
         
     else:
         return "error"
     
-    return TeamName
-    return d_TeamName
+    return TeamName, d_TeamName
 
 #Auslesen der Datenbank:  
     
@@ -100,8 +103,8 @@ def readData(TeamName):
     
     worst_gesamt = max(all_gesamt)
     
-    4th_best_gesamt = max(heapq.nsmallest(4, all_gesamt))
-    4th_best_runde = max(heapq.nsmallest(4, all_runde))
+    fourth_best_gesamt = max(heapq.nsmallest(4, all_gesamt))
+    fourth_best_runde = max(heapq.nsmallest(4, all_runde))
 
     
     bestP_runde = df2[' Rundenzeit'].min()
@@ -131,12 +134,21 @@ def readData(TeamName):
     #worstP_30 = df2[' Checkpoint 4'].max()
     
     
-    return (best_runde, best_gesamt, worst_runde, worst_gesamt, bestP_runde, bestP_gesamt, worstP_runde, worstP_gesamt, 4th_best_gesamt, 4th_best_runde)
+    return (best_runde, best_gesamt, worst_runde, worst_gesamt, bestP_runde, bestP_gesamt, worstP_runde, worstP_gesamt, fourth_best_gesamt, fourth_best_runde)
 
 #Kommentar-Text aus Team, Checkpoint und Renndaten erstellen
 
-def commentary(check, d_TeamName, best_runde, best_gesamt, worst_runde, worst_gesamt, bestP_runde, bestP_gesamt, worstP_runde, worstP_gesamt):
+def commentary(check, d_TeamName, best_runde, best_gesamt, worst_runde, worst_gesamt, bestP_runde, bestP_gesamt, worstP_runde, worstP_gesamt, starttime):
 
+    dfx = pd.read_excel("text4.xls")    
+
+    pause = "<break/>"
+    mittel_pause = "<break time='750ms'/>"
+    lang_pause = "<break time='1200ms'/>"
+    minu = " "
+    sec = " "
+    text_m = "Minuten"
+    
 #Ansage am Start:
 
     if check == 0:
@@ -144,522 +156,89 @@ def commentary(check, d_TeamName, best_runde, best_gesamt, worst_runde, worst_ge
         #Team hält Gesamtrekord:
         
         if bestP_gesamt == best_gesamt:
-            z = randint(0,5)
-            minu, sec = timeConvert(best_gesamt)
-            if minu != 1:
-                text_m = "Minuten"
-            else:
-                text_m = "Minute"
-                
-            if z == 0:
-                text = "Der Gesamtrekordhalter %s steht am Start. " %(d_TeamName)
-            elif z == 1:
-                text = "Mit %s %s %s Sekunden hält %s derzeit den Streckenrekord." %(minu,text_m,sec,d_TeamName)
-            elif z == 2:
-                text = "Bestzeithalter %s macht sich bereit. Ihre bisherige Zeit: %s %s, %s Sekunden." %(d_TeamName,minu,text_m,sec)
-            elif z == 3:
-                text = "Das bisher beste Team %s muss sich noch einmal behaupten." %(d_TeamName)
-            elif z == 4:
-                text = "%s ist Rekordhalter mit einer Zeit von %s %s %s" %(d_TeamName,minu,text_m,sec)
-            elif z == 5:    
-                text = "Aufgepasst! Gut hinschauen. %s war bisher mit annähernd Lichtgeschwindigkeit unterwegs." %(d_TeamName)
+            z1 = randint(0,5)
+            minu, sec, text_m = timeConvert(best_gesamt)
+            text1 = dfx.loc[z1,"0_0"]
                 
         #Team hält Rundenrekord aber nicht Gesamtrekord:
         
         elif bestP_runde == best_runde: 
-            z = randint(0,5)
-            minu, sec = timeConvert(best_runde)
-            if minu != 1:
-                text_m = "Minuten"
-            else:
-                text_m = "Minute"
-                
-            if z == 0:
-                text = "Der Rundenrekordhalter %s steht am Start" %(d_TeamName)
-            elif z == 1:
-                text = "%s hält bisher den Rundenrekord. Wird es jetzt auch den Gesamtrekord einfahren?" %(d_TeamName)
-            elif z == 2:
-                text = "%s hat die Rundenbestzeit von %s Minuten %s Sekunden aufgestellt. Wird %s seinen eigenen Rekord brechen?" %(d_TeamName,minu,sec,d_TeamName)
-            elif z == 3:
-                text = "Der Rundenrekord ist nur die halbe Miete. Jetzt will %s den Gesamtrekord!" %(d_TeamName)
-            elif z == 4:
-                text = "Mit einer Rundenzeit von %s %s %s Sekunden Rekordhalter: %s" %(minu,text_m,sec,d_TeamName)
-            elif z == 5:
-                text = "Für eine schnelle Runde hat's bei %s gereicht. Jetzt sollen's zwei am Stück sein." %(d_TeamName)
+            z1 = randint(0,5)
+            minu, sec, text_m = timeConvert(best_runde)
+            text1 = dfx.loc[z1,"0_1"]
+
+            
                 
         #Team hält Negativ-Gesamtrekord:
                 
         elif bestP_gesamt == worst_gesamt: 
-            z = randint(0,4)
-            minu, sec = timeConvert(worst_gesamt)
-            if minu != 1:
-                text_m = "Minuten"
-            else:
-                text_m = "Minute"
-                
-            if z == 0:
-                text = "%s ist bisher das langsamste. Man erhofft Besserung." %(d_TeamName)
-            elif z == 1:
-                text = "%s hat nun die Chance seine Ehre wieder herzustellen." %(d_TeamName)
-            elif z == 2:
-                text = "Ein Wunder, dass sich %s nach ihrem bisherigem Ergebnis nochmal an den Start traut. Naja" %(d_TeamName)
-            elif z == 3:
-                text = "Dieser Durchgang könnte etwas länger dauern. %s ist am Start." %(d_TeamName)
-            elif z == 4:
-                text = "Das könnte ein laaaaaangsames Rennen werden. Aber vielleicht ist %s für eine Überraschung gut." %(d_TeamName)
-            elif z == 5
-                text = "Mit einer Zeit von %s %s %s Sekunden führt %s das Feld von hinten an." %(minu,text_m,sec,d_TeamName)
+            z1 = randint(0,5)
+            minu, sec, text_m = timeConvert(worst_gesamt)
+            text1 = dfx.loc[z1,"0_2"]
+            
 
         #Team hält Negativ-Rundenrekord aber nicht Negativ-Gesamtrekord:
                 
         elif bestP_runde == worst_runde: 
-            z = randint(0,2)
-            minu, sex = timeConvert(worst_runde)
-            if minu != 1:
-                text_m = "Minuten"
-            else:
-                text_m = "Minute"
+            z1 = randint(0,2)
+            minu, sec, text_m = timeConvert(worst_runde)
+            text1 = dfx.loc[z1,"0_3"]
             
-            if z == 0:
-                text = "Hier kommt %s mit der bisher schlechtesten Rundenzeit" %(d_TeamName)
-            elif z == 1:
-                text = "%s hat bisher die schechteste Runde aufgestellt. Aber immerhin nicht die schlechteste Gesamtzeit." %(d_TeamName)
-            elif z == 2:
-                text = "Schlechteste Rundenzeit aber nicht schlechteste Gesamtzeit? %s hats geschafft" %(d_TeamName)
-           
         #sonst:
         
         else:
-            z = randint(0,16)
-            if z == 0:
-                text = "%s steht am Start bereit." %(d_TeamName)
-            elif z == 1:
-                text = "Nun am Start %s." %(d_TeamName)
-            elif z == 2:
-                text = "Als nächstes %s." %(d_TeamName)
-            elif z == 3:
-                text = "An der Startlinie steht das Auto von %s" %(d_TeamName)
-            elif z == 4:
-                text = "%s will versuchen alle Rekorde zu brechen." %(d_TeamName)
-            elif z == 5:
-                text = "Ferrari oder Ente? Die Stunde der Wahrheit für %s" %(d_TeamName)
-            elif z == 6:
-                text = "Wer hat noch nicht, wer will nochmal? %s" %(d_TeamName)
-            elif z == 7:
-                text = "%s macht sich bereit." %(d_TeamName)
-            elif z == 8:
-                text = "Nun endlich %s " %(d_TeamName)
-            elif z == 9:
-                text = "Für %s stellt sich jetzt die Frage: Gepard oder Schnecke." %(d_TeamName)
-            elif z == 10:
-                text = "Man darf gespannt sein, wie dieser Versuch für %s laufen wird" %(d_TeamName)
-            elif z == 11:
-                text = "%s steht an der Linie." %(d_TeamName)
-            elif z == 12:
-                text = "%s ist am Start." %(d_TeamName)
-            elif z == 13:
-                text = "Strecke frei für %s." %(d_TeamName)
-            elif z == 14:
-                text = "Jetzt heißt es Bleifuß auspacken für %s" %(d_TeamName)
-            elif z == 15:
-                text = "%s wills wissen." %(d_TeamName)
-            elif z == 16
-                text = "Bisher eher im Mittelfeld zuhause: %s" %(d_TeamName)
+            z1 = randint(0,17)
+            text1 = dfx.loc[z1,"0_4"]
         
-        z2 = randint(0,29)
-        if z2 == 0:
-            text2 = " Licht aus, Spot an!"
-        elif z2 == 1:
-            text2 = " Los gehts!"
-        elif z2 == 2:
-            text2 = " Und ab geht die wilde Fahrt!"
-        elif z2 == 3:
-            text2 = " Auf gehts!"
-        elif z2 == 4:
-            text2 = " Ab geht die Luzzi"
-        elif z2 == 5:
-            text2 = " Mats ab!"
-        elif z2 == 6:
-            text2 = " Auf die Plätze!"
-        elif z2 == 7:
-            text2 = " Startet die Ampel!"
-        elif z2 == 8:
-            text2 = " Brrrrumm brrumm!"
-        elif z2 == 9:
-            text2 = " Ab gehts!"
-        elif z2 == 10:
-            text2 = " Startet die Motoren!"
-        elif z2 == 11:
-            text2 = " Ab geht die Post!"
-        elif z2 == 13:
-            text2 = " Drei, zwei, eins!"
-        elif z2 == 14:
-            text2 = " Auf los gehts los!"
-        elif z2 == 15:
-            text2 = " Räddi, sätt!"
-        elif z2 == 16:
-            text2 = " Uuuuuund los!"
-        elif z2 == 17:
-            text2 = " Auf ein neues!"
-        elif z2 == 18:
-            text2 = " Lasst die Spiele beginnen!"
-        elif z2 == 19:
-            text2 = " Viel Glück!"
-        elif z2 == 20:
-            text2 = " Viel Erfolg!" 
-        elif z2 == 21:
-            text2 = " Hals und Beinbruch!"
-        elif z2 == 22:
-            text2 = " Und ab dafür!"
-        elif z2 == 23:
-            text2 = " Toi toi toi!"  
-        elif z2 == 24:
-            text2 = " Gut Holz!"
-        elif z2 == 25:
-            text2 = " Leinen los!"
-        elif z2 == 26:
-            text2 = " Denn man to!"
-        elif z2 == 27:
-            text2 = " Frisch auf!"
-        elif z2 == 28:
-            text2 = " Jetzt aber ran an die Buletten!"
-        elif z2 == 29:
-            text2 = " Aufi!"
+         
+        #zweiter Teil:
+        z2 = randint(0,44)
+        text2 = dfx.loc[z2,"0_5"]
             
-        text = text+text2
+        text = text1.format(d_TeamName,minu,text_m,sec)+mittel_pause+text2
         
         
 #Ansage nach 2 Runden:
               
     elif check == 9:
-        time_end = time.time() - starttime
-        minu,sec = timeConvert(time_end)
-        if minu != 1:
-                text_m = "Minuten"
-            else:
-                text_m = "Minute"
-                
-        if time_end < best_gesamt:
-            text = "Neue Bestzeit von %s %s %s Sekunden von %s"%(minu,text_m,sec,d_TeamName)
-        elif time_end < bestP_gesamt:
-            text = "Neue persönliche Bestzeit von %s %s %s Sekunden von %s"%(minu,text_m,sec,d_TeamName)
-        elif time_end > worst_gesamt:
-            text = "Neue schlechteste Gesamtzeit von %s %s %s Sekunden von %s"%(minu,text_m,sec,d_TeamName)   
-        elif time_end > worstP_gesamt:
-            text = "Neue persönliche schlechteste Zeit von %s %s %s Sekunden von %s"%(minu,text_m,sec,d_TeamName)  
-        else
-            text = "Mittelmaß von %s %s %s Sekunden von %s"%(minu,text_m,sec,d_TeamName)  
+        time_end = int(time.time() - starttime -6)
+        minu, sec, text_m = timeConvert(time_end)
+        print("zeit:")
+        print (time_end)  
+        print("bestzeit:")
+        print (best_gesamt)
+        print("bestP_gesamt:")
+        print (bestP_gesamt)  
+        print("worst_gesamt:")
+        print (worst_gesamt)
+        print("worstP_gesamt:")
+        print (worstP_gesamt)
+        
+        if time_end <= best_gesamt:
+            z1 = randint(0,7)
+            text1 = dfx.loc[z1,"9_0"]
+        elif time_end <= bestP_gesamt:
+            z1 = randint(0,4)
+            text1 = dfx.loc[z1,"9_1"]
+        elif time_end >= worst_gesamt:
+            z1 = randint(0,7)
+            text1 = dfx.loc[z1,"9_2"]
+        elif time_end >= worstP_gesamt:
+            z1 = randint(0,0)
+            text1 = dfx.loc[z1,"9_3"]
+        else:
+            z1 = randint(0,18)
+            text1 = dfx.loc[z1,"9_4"]
             
-        z2 = randint(0,9)
-        if z2 == 0:
-            text2 = " Wer ist der nächste?"
-        elif z2 == 1:
-            text2 = " Der nächste bitte!"
-        elif z2 == 2:
-            text2 = " Wer kommt jetzt?"
-        elif z2 == 3:
-            text2 = " Bitte das nächste Auto an den Start!"
-        elif z2 == 4:
-            text2 = " Näxt plies!"
-        elif z2 == 5:
-            text2 = " Huus näxt?"
-        elif z2 == 6:
-            text2 = " Wer ist als nächstes an der Reihe?"
-        elif z2 == 7:
-            text2 = " Wer ist nun dran?"
-        elif z2 == 8:
-            text2 = " Wir sind gespannt aufs nächste Tiem!"
+        z2 = randint(0,17)
+        text2 = dfx.loc[z2,"9_5"]
         
+        text = text1.format(d_TeamName,minu,text_m,sec)+lang_pause+text2
         
-        text = text+text2
     return text
             
-''''#Ansage am 1. Checkpoint (bei beiden Durchgängen):
 
-    elif check == 1 or check == 5:
-        
-        if t < best_01:
-            z = randint(0,12)
-            t = 
-            timeConvert(t)
-            if z == 0:
-                text = "Seit dem letzten Checkpoint ist %s %s Minuten %s Sekunden unterwegs" %(d_TeamName,minu,sec)
-            elif z == 1:
-                text = "%s ist bisher das schnellste Team in Abschnitt 1" %(d_TeamName)
-            elif z == 2:
-                text = "Ein neuer Abschnittsrekord von %s Minuten %s Sekunden" %(minu,sec)
-            elif z == 3:
-                text = "%s Minuten und %s Sekunden ist der neue Rekord für Abschnitt 1" %(minu,sec)
-            elif z == 4:
-                text = "%s sind bisher die Schnellsten in Abschnitt 1" %(d_TeamName)
-            elif z == 5:
-                text = "Eine neue Bestzeit in Abschnitt 1"
-            elif z == 6:
-                text = "In Abschnitt 1 bisher die schnellste Zeit mit %s Minuten %s Sekunden" %(minu,sec)
-            elif z == 7:
-                text = "Brumm Brumm. Wie schnell %s in diesem Abschnitt ist" %(d_TeamName)
-            elif z == 8:
-                text = "%s geht ab. Daher auch der Name Ab schnitt. LOL. Hahaha. " %(d_TeamName)
-            elif z == 9:
-                text = "Eine super Zeit für diesen Abschnitt!"
-            elif z == 10:
-                text = "Bei der Geschwindigkeit kommt ja Dopingverdacht auf"
-            elif z == 11:
-                text = "Das Auto scheint mit Lachgaseinspritzung unterwegs zu sein."
-            elif z == 12:
-                text = "Der Turbo ist an bei %s!" %(d_TeamName)
-                
-            #nur bei Abschnitt 1:
-            elif z == 9:
-                text = "%s steigt gut in die Runde ein mit %s Minuten %s Sekunden auf dem ersten Abschnitt" %(d_TeamName,minu,sec)
-            elif z == 10:
-                text = "%s legt einen super Anfang in diese Runde hin" %(d_TeamName)
-            elif z == 11:
-                text = "Ein perfekter Start in die Runde von %s" %(d_TeamName)
             
-            
-        elif t < bestP_01:
-            z = randint(1,3)
-            if z == 1:
-                
-        elif t > worst_01:
-            z = randint(1,3)
-            if z == 1:
-                
-        elif z > worstP_01:
-            z = randint(1,3)
-            if z == 1:
-                
-        else
-            text = ""
-            
-#Ansage am 2. Checkpoint (bei beiden Durchgängen):
-       
-    elif check == 2 or check == 6:
-        
-        if t < best12:
-            z = randint(0,8)
-            timeConvert(t)
-            if z == 0:
-                text = "Seit dem letzten Checkpoint ist %s %s Minuten %s Sekunden unterwegs" %(d_TeamName,minu,sec)
-            elif z == 1:
-                text = "%s ist bisher das schnellste Team in Abschnitt 1" %(d_TeamName)
-            elif z == 2:
-                text = "Ein neuer Abschnittsrekord von %s Minuten %s Sekunden" %(minu,sec)
-            elif z == 3:
-                text = "%s Minuten und %s Sekunden ist der neue Rekord für Abschnitt 1" %(minu,sec)
-            elif z == 4:
-                text = "%s sind bisher die Schnellsten in Abschnitt 1" %(d_TeamName)
-            elif z == 5:
-                text = "Eine neue Bestzeit in Abschnitt 1"
-            elif z == 6:
-                text = "In Abschnitt 1 bisher die schnellste Zeit mit %s Minuten %s Sekunden" %(minu,sec)
-            elif z == 7:
-                text = "Brumm Brumm. Wie schnell %s in diesem Abschnitt ist" %(d_TeamName)
-            elif z == 8:
-                text = "%s geht ab. Daher auch der Name Ab schnitt. LOL. Hahaha. " %(d_TeamName)
-            elif z == 9:
-                text = "Eine super Zeit für diesen Abschnitt!"
-            elif z == 10:
-                text = "Bei der Geschwindigkeit kommt ja Dopingverdacht auf"
-            elif z == 11:
-                text = "Das Auto scheint mit Lachgaseinspritzung unterwegs zu sein."
-            elif z == 12:
-                text = "Der Turbo ist an bei %s!" %(d_TeamName)
-                
-        elif t < bestP_12:
-            text = "Beispiel 2"
-        elif t > worst_12:
-            text = "Beispiel 3"
-        elif t > worstP_12:
-            text = "Beispiel 4"
-        else
-            z = randint(0,30)
-            if z == 0:
-                text = "Wer Durchschnitt mag, der mag %s." %(d_TeamName)
-            elif z == 1:
-                text = "Eine ordentliche Zeit auf diesem Abschnitt von %s." %(d_TeamName)
-            elif z == 2:
-                text = "%s mit gutem Mittelmaß." %(d_TeamName)
-            elif z == 3:
-                text = "Mit der Zeit liegt %s im Mittelfeld." %(d_TeamName)
-            elif z == 4:
-                text = "Nichts halbes und ganzes von %s." %(d_TeamName)
-            elif z == 5:
-                text = "Die Zeit von %s auf dem Abschnitt war eher Mittelklasse." %(d_TeamName)
-            elif z == 6:
-                text = "%s mit einer eher mäßigen Zeit." %(d_TeamName)
-            elif z == 7:
-                text = "Eine mittelprächtige Leistung von %s." %(d_TeamName)
-            elif z == 8:
-                text = "Nicht berauschend, was %s hier abliefert." %(d_TeamName)
-            elif z == 9:
-                text = "%s ist mit moderater Geschwindigkeit unterwegs" %(d_TeamName)
-            elif z == 10:
-                text = "Ein passables Ergebnis auf diesem Abschnitt"
-            elif z == 11:
-                text = "Das war jetzt so lala."
-            elif z == 12:
-                text = "Ein durchwachsenes Abschnittsergebnis."
-            elif z == 13:
-                text = "Das war so einigermaßen."
-            elif z == 14:
-                text = "Ich sag mal okay."
-            elif z == 15:
-                text = "Die Zeit ist nicht überwältigend."
-            elif z == 16:
-                text = "Das war eine mittelmäßige Zeit"
-            elif z == 17:
-                text = "Die Zeit hätte besser sein können. Aber auch schlechter."
-            elif z == 18:
-                text = "Der Traum von %s: Nicht Mercedes sondern Opel" %(d_TeamName) 
-            elif z == 19:
-                text = "Der Traum von %s: Nicht Mercedes sondern Opel" %(d_TeamName) 
-            elif z == 18:
-                text = "Der Traum von %s: Nicht Mercedes sondern Opel" %(d_TeamName) 
-            elif z == 18:
-                text = "Der Traum von %s: Nicht Mercedes sondern Opel" %(d_TeamName) 
-            else:
-                text = ""
-                
-#Ansage am 3. Checkpoint (bei beiden Durchgängen):
- 
-    elif check == 3 or check == 7:
-        
-        if t < best23:
-            z = randint(0,9)
-            timeConvert(t)
-            if z == 0:
-                text = "Seit dem letzten Checkpoint ist %s %s Minuten %s Sekunden unterwegs" %(d_TeamName,minu,sec)
-            elif z == 1:
-                text = "%s ist bisher das schnellste Team in Abschnitt 3" %(d_TeamName)
-            elif z == 2:
-                text = "Ein neuer Abschnittsrekord von %s Minuten %s Sekunden" %(minu,sec)
-            elif z == 3:
-                text = "%s Minuten und %s Sekunden ist der neue Rekord für Abschnitt 3" %(minu,sec)
-            elif z == 4:
-                text = "%s sind bisher die Schnellsten in Abschnitt 3" %(d_TeamName)
-            elif z == 5:
-                text = "Eine neue Bestzeit in Abschnitt 3"
-            elif z == 6:
-                text = "In Abschnitt 3 bisher die schnellste Zeit mit %s Minuten %s Sekunden" %(minu,sec)
-            elif z == 7:
-                text = "Brumm Brumm. Wie schnell %s in diesem Abschnitt ist" %(d_TeamName)
-            elif z == 8:
-                text = "%s geht ab. Daher auch der Name Ab schnitt. Hahaha." %(d_TeamName)
-                
-        elif t < bestP_23:
-            text = "Beispiel 2"
-        elif t > worst_23:
-            text = "Beispiel 3"
-        elif z > worstP_23:
-            text = "Beispiel 4"
-        else
-            text = ""           
-            
-''''
-            
-''''#Ansage nach einer Runde:
-
-    elif check == 4:
-        
-        if t < best_runde:
-            z = randint(0,9)
-            if z == 0:
-                text = "Beispiel 1"
-            elif z == 1:
-                text = "Beispiel 1"
-            elif z == 1:
-                text = "Beispiel 1"
-            elif z == 1:
-                text = "Beispiel 1"
-            elif z == 1:
-                text = "Beispiel 1"
-            elif z == 1:
-                text = "Beispiel 1"
-            elif z == 1:
-                text = "Beispiel 1"
-            elif z == 1:
-                text = "Beispiel 1"
-            
-        elif t < bestP_runde:
-            z = randint(0,9)
-            if z == 0:
-                text = "Beispiel 1"
-            elif z == 1:
-                text = "Beispiel 1"
-            elif z == 1:
-                text = "Beispiel 1"
-            elif z == 1:
-                text = "Beispiel 1"
-            elif z == 1:
-                text = "Beispiel 1"
-            elif z == 1:
-                text = "Beispiel 1"
-            elif z == 1:
-                text = "Beispiel 1"
-            elif z == 1:
-                text = "Beispiel 1"
-            
-        elif t > worst_runde:
-            z = randint(0,9)
-            if z == 0:
-                text = "Beispiel 1"
-            elif z == 1:
-                text = "Beispiel 1"
-            elif z == 1:
-                text = "Beispiel 1"
-            elif z == 1:
-                text = "Beispiel 1"
-            elif z == 1:
-                text = "Beispiel 1"
-            elif z == 1:
-                text = "Beispiel 1"
-            elif z == 1:
-                text = "Beispiel 1"
-            elif z == 1:
-                text = "Beispiel 1"
-               
-        elif t > worstP_runde:
-            z = randint(0,9)
-            if z == 0:
-                text = "Beispiel 1"
-            elif z == 1:
-                text = "Beispiel 1"
-            elif z == 1:
-                text = "Beispiel 1"
-            elif z == 1:
-                text = "Beispiel 1"
-            elif z == 1:
-                text = "Beispiel 1"
-            elif z == 1:
-                text = "Beispiel 1"
-            elif z == 1:
-                text = "Beispiel 1"
-            elif z == 1:
-                text = "Beispiel 1"
-              
-        else
-            z = randint(0,9)
-            if z == 0:
-                text = "Beispiel 1"
-            elif z == 1:
-                text = "Beispiel 1"
-            elif z == 1:
-                text = "Beispiel 1"
-            elif z == 1:
-                text = "Beispiel 1"
-            elif z == 1:
-                text = "Beispiel 1"
-            elif z == 1:
-                text = "Beispiel 1"
-            elif z == 1:
-                text = "Beispiel 1"
-            elif z == 1:
-                text = "Beispiel 1"''''
-            
-                
-
                 
     
 
@@ -667,15 +246,15 @@ def commentary(check, d_TeamName, best_runde, best_gesamt, worst_runde, worst_ge
 
 def synthesis(text):
     
-    speed = 200
-    call(["espeak", "-vmb-de4", "-a 80" , speed, text, "2>/dev/null"])
+    #speed = 200
+    call(["espeak", "-vmb-de6", "-a 90" ,"-m", "-s 165", text, "2>/dev/null"])
     
-def playSpeech(check, teamid):
+def playSpeech(check, teamid, starttime = 0):
     TeamName, d_TeamName = IDconvert(teamid)
     
-    best_runde, best_gesamt, worst_runde, worst_gesamt, bestP_runde, bestP_gesamt, worstP_runde, worstP_gesamt, 4th_best_gesamt, 4th_best_runde = readData(TeamName)
+    best_runde, best_gesamt, worst_runde, worst_gesamt, bestP_runde, bestP_gesamt, worstP_runde, worstP_gesamt, fourth_best_gesamt, fourth_best_runde = readData(TeamName)
     
-    text = commentary(best_runde, best_gesamt, worst_runde, worst_gesamt, bestP_runde, bestP_gesamt, worstP_runde, worstP_gesamt, 4th_best_gesamt, 4th_best_runde)
+    text = commentary(check, d_TeamName, best_runde, best_gesamt, worst_runde, worst_gesamt, bestP_runde, bestP_gesamt, worstP_runde, worstP_gesamt, starttime)
     
     synthesis(text)
 
@@ -689,9 +268,9 @@ def s_speech(var2):
     
 #sound function
 
-def playSound(check, teamid, starttime):
-    if check == -4
-        sound = "beep_1.wav"
+def playSound(check, teamid = 0, starttime = 0):
+    if check == -4:
+        sound = "restart.wav"
         
     elif check == -3:
         sound = "scan.wav" 
@@ -714,24 +293,17 @@ def playSound(check, teamid, starttime):
         lit.strip.show()
         
     elif check == 4:
-        sound = "2nd_lap.wav"
+        sound = "2nd_lap2.wav"
         
     elif check == 8:
-        4th_best_gesamt = readData(teamid)[8]
+        fourth_best_gesamt = readData(teamid)[8]
         time_now = time.time() - starttime 
-        if time_now < 4th_best_gesamt:
-            sound = "end_good.wav"
-        else:
+        if time_now > fourth_best_gesamt:
             sound = "end_bad.wav"
+        else:
+            sound = "end_good.wav"
 
     
     call(["aplay", "/home/pi/work/its/ITSRacetrack/sounds/"+sound])
-    
-    if check == 8:
-        time.sleep(8)
-        #time_now = time_now - 8
-        playSpeech(check, teamid, time_now)
-        time.spleep(10)
-        
-    
-    
+
+
