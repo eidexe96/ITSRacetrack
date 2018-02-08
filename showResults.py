@@ -3,7 +3,7 @@ import time
 import math
 global check
 
-def showTime(starttime):
+def showTime(starttime):                                            #Outdated! Schreibt die Zeit seit dem Start in die Konsole
     result = time.time() - starttime
     s = round(result%60,1)
     m = math.floor(result/60)
@@ -15,12 +15,10 @@ def showTime(starttime):
     print(out)
     
 def showResults(activeCheckpoint, teamid, starttime):
-    fn = "test.csv" #CSV - Datenbank
-    htmlpage = "test.html" #Zieldatei html
+    fn = "test.csv"
+    htmlpage = "test.html"                                          #Zieldatei html
     if activeCheckpoint == 0:
-        #show Team info
-        #df = pd.read_csv(fn)     #pd.DataFrame.from_csv(fn)
-        #table = pd.DataFrame.to_html(df)
+        #Beim Start des Rennens wird nur das Erkennen des Autos quitiert
         text = "Ein Auto wurde erkannt. Das Rennen beginnt. Viel Erfolg!"
         htmlOut= open(htmlpage,"w")
         prefixFile = open("htmlPrefix.txt", 'r')
@@ -31,14 +29,14 @@ def showResults(activeCheckpoint, teamid, starttime):
         htmlOut.close()
         prefixFile.close()
     elif activeCheckpoint > 0 and activeCheckpoint < 9:
-        #show Live Time
+        #Während des Rennens werden Zwischenergebnisse angezeigt
         df = pd.read_csv("test.csv")
-        df = df.sort_values(' Gesamtzeit')
-        df = df.drop_duplicates(subset='Teamname', keep='first')
+        df = df.sort_values(' Gesamtzeit')                          #Es wird für jedes Team nur der Eintrag mit der
+        df = df.drop_duplicates(subset='Teamname', keep='first')    #besten Gesamtzeit angezeigt.
         df = df[['Teamname', ' Checkpoint1', ' Checkpoint2', ' Checkpoint3', ' Checkpoint4']]
         entries = df['Teamname'].count()
         teams = ['Racetrack', 'Optimus Pi', 'X', 'Team2', 'Pink Danger', 'Racing Team 1', '', 'The Speedcoders']
-        if activeCheckpoint == 1:
+        if activeCheckpoint == 1:                                   #Beim ersten Aufruf werden die Variablen neu erzeugt/resettet
             global checkpoints
             global lastCheckpoint
             checktime = round(time.time()-starttime,0)
@@ -47,12 +45,12 @@ def showResults(activeCheckpoint, teamid, starttime):
             check = " Checkpoint1"
             df = df.append({'Teamname' : teams[teamid], ' Checkpoint1' : checktime}, ignore_index = True)
         else:
-            toLastCheckpoint = checkpoints[(activeCheckpoint-2)%4]
+            toLastCheckpoint = checkpoints[(activeCheckpoint-2)%4]  #Zeit seit dem Start des Rennens bis zum Erreichen des letzten CPs
             check = " Checkpoint"
             check += str(activeCheckpoint%4)
             checkpoints[(activeCheckpoint-1)%4] = round(time.time() - lastCheckpoint,0)
             lastCheckpoint = time.time()
-            df[0:entries] #lÃ¶scht den letzten Eintrag
+            df[0:entries]                                           #löscht den letzten Eintrag um ihn neu schreiben zu können
             if activeCheckpoint == 2 or activeCheckpoint == 6:
                 df = df.append({'Teamname' : teams[teamid], ' Checkpoint1' : checkpoints[0], ' Checkpoint2' : checkpoints[1]}, ignore_index = True)
             elif activeCheckpoint == 3 or activeCheckpoint == 7:
@@ -62,8 +60,7 @@ def showResults(activeCheckpoint, teamid, starttime):
             else:
                 df = df.append({'Teamname' : teams[teamid], ' Checkpoint1' : checkpoints[0], ' Checkpoint2' : checkpoints[1], ' Checkpoint3' : checkpoints[2], ' Checkpoint4' : checkpoints[3]}, ignore_index = True)
                 check = " Checkpoint4"
-        #df = df.sort_values([check])
-        table = pd.DataFrame.to_html(df)
+        table = pd.DataFrame.to_html(df)                            #erzeugt eine HTML-Tabelle aus dem Pandas-DataFrame
         
         htmlOut= open(htmlpage,"w")
         prefixFile = open("htmlPrefix.txt", 'r')
@@ -74,12 +71,12 @@ def showResults(activeCheckpoint, teamid, starttime):
         htmlOut.close()
         prefixFile.close()
     elif activeCheckpoint == 9:
-        #show Results after Race End
+        #zeigt die detailierteren Gesamtergebnisse am Ende des Rennens
         fn = "test.csv"
         df = pd.read_csv(fn)
         dfsorttime = df.sort_values([' Gesamtzeit'])
         dfhighscore = dfsorttime.drop_duplicates(subset='Teamname', keep='first')
-        dfh = dfhighscore#[[0,1,2,8,10]]#ggf. noch rundenzeit und einzelzeiten 3 bis 7
+        dfh = dfhighscore
         table = pd.DataFrame.to_html(dfh)
         htmlOut= open(htmlpage,"w")
         prefixFile = open("htmlPrefix.txt", 'r')

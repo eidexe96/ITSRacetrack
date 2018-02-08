@@ -1,7 +1,7 @@
 import pandas as pd
 import time
 
-def writeToDb(teamid, gesamtzeit, rundenzeit, zeit01, zeit12, zeit23, zeit30, liveZeit):
+def writeToDb(teamid, gesamtzeit, rundenzeit, zeit01, zeit12, zeit23, zeit30, liveZeit):    #Übersetzt Teamid und schreibt alle Zeiten in eine CSV-Datei
     global time
     if(teamid == 1):
         teamname = "Optimus Pi"
@@ -31,7 +31,6 @@ def writeToDb(teamid, gesamtzeit, rundenzeit, zeit01, zeit12, zeit23, zeit30, li
         return "error"
     
     rightnow = time.strftime("%d.%m.%Y %H:%M:%S")
-    #inputdf = pd.DataFrame({ 'Teammitglieder' : [teammitglieder], 'Teamname' : [teamname],'BesteGesamtzeit' : [gesamtzeit], 'Rundenzeit' : [rundenzeit], 'Bestzeit01' : [zeit01], 'Bestzeit12' : [zeit12], 'Bestzeit23' : [zeit23], 'Bestzeit30' : [zeit30], 'Info' : [info], 'LiveZeit' : [liveZeit], 'Datum' : [rightnow]})
     
     with open('test.csv', 'a') as fd:
         fd.write('%s, %s, %s, %s, %s, %s, %s, %s, %s, %s \n'%(teamname, teammitglieder, gesamtzeit, rundenzeit, zeit01, zeit12, zeit23, zeit30, info, rightnow))

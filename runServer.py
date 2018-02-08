@@ -4,7 +4,7 @@ from http.server import BaseHTTPRequestHandler, HTTPServer
 HOST_NAME = '192.168.0.193'
 PORT_NUMBER = 8081
 
-class MyHandler(BaseHTTPRequestHandler):
+class MyHandler(BaseHTTPRequestHandler):                #Webserver handelt Anfragen für Ergebnisausgabe
     def do_HEAD(self):
         self.send_response(200)
         self.send_header('Content-type', 'text/html')
@@ -23,7 +23,7 @@ class MyHandler(BaseHTTPRequestHandler):
             html += line.rstrip()
         htmlFile.close()
         content = html
-        return bytes(content, 'UTF-8')
+        return bytes(content, 'UTF-8')                  #Es wird immer der Inhalt der Datei "test.html" zurückgegeben
 
     def respond(self, opts):
         response = self.handle_http(opts['status'], self.path)
@@ -34,7 +34,7 @@ def startServer():
     httpd = server_class((HOST_NAME, PORT_NUMBER), MyHandler)
     print(time.asctime(), 'Server Starts - %s:%s' % (HOST_NAME, PORT_NUMBER))
 
-    try:
+    try:                                                #Threadfähiger Server
         while 1:
             print("start2serve")
             httpd.serve_forever()
